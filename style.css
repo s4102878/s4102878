@@ -1,0 +1,947 @@
+@font-face {
+    font-family: 'OCR A Std';
+    font-style: normal;
+    font-weight: normal;
+    src: local('OCR A Std'), url('fonts/OCRAStd.woff');
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #E6E5E5; /* Màu xám nhạt đồng bộ */
+    font-family: 'OCR A Std', monospace;
+    font-weight: 200;
+  
+ /* Đảm bảo font chữ thống nhất */
+}
+
+
+/* Container bao phủ toàn màn hình */
+.landing-container {
+    position: relative;
+    width: 100%; /* Sử dụng 100% thay vì 100vw để tránh lỗi thanh cuộn ngang trên một số trình duyệt */
+    min-height: 100vh; 
+    min-height: 100dvh; /* Đơn vị mới giúp khớp chuẩn với màn hình điện thoại */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Căn giữa nội dung theo chiều dọc */
+    align-items: center;    /* Căn giữa nội dung theo chiều ngang */
+    overflow: hidden;
+    padding: 20px;         /* Khoảng trống an toàn cho mobile */
+    box-sizing: border-box;
+}
+
+
+/* Cho điện thoại (Mobile) */
+@media (max-width: 768px) {
+    .landing-container {
+        /* Nếu có ảnh nền, bạn có thể chỉnh lại vị trí trung tâm */
+        background-position: center; 
+        padding: 15px;
+    }
+    
+    .landing-container h1 {
+        font-size: 1.8rem; 
+        text-align: center;
+    }
+}
+
+/* Style chung cho các hộp chứa chong chóng */
+.windmill {
+    position: absolute;
+    /* Sử dụng clamp để kích thước linh hoạt: 
+       Min là 120px, lý tưởng là 18vw, Max là 280px */
+    width: clamp(120px, 18vw, 280px); 
+    height: auto;
+    z-index: 1; /* Đảm bảo nằm dưới box chính nếu cần */
+}
+
+/* Đảm bảo hình SVG bên trong luôn vừa khít hộp */
+.windmill svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* --- VỊ TRÍ CHI TIẾT THEO HÌNH NOTE --- */
+
+/* Asset 1: Góc trên bên trái */
+.asset1 {
+    top: 2%;
+    left: 5%;
+}
+
+/* Asset 2: Góc trên bên phải */
+.asset2 {
+    top: 2%;
+    right: 5%;
+}
+
+/* Asset 3: Góc dưới bên phải */
+.asset3 {
+    bottom: 5%;
+    right: 5%;
+}
+
+/* Asset 4: Góc dưới bên trái */
+.asset4 {
+    bottom: 5%;
+    left: 8%;
+}
+/* --- CHO TABLET (Dưới 1024px) --- */
+@media (max-width: 1024px) {
+    .asset1 { top: 5%; left: 2%; }
+    .asset2 { top: 5%; right: 2%; }
+    .asset3 { bottom: 8%; right: 2%; }
+    .asset4 { bottom: 8%; left: 2%; }
+}
+
+@media (max-width: 768px) {
+    .windmill {
+        /* Cho chong chóng nhỏ lại để không lấn át cái box ở giữa */
+        width: clamp(70px, 20vw, 120px); 
+    }
+
+    /* Đẩy vào trong một chút (ví dụ 5% thay vì âm hoặc 0%) */
+    .asset1 { top: 5%; left: 5%; }
+    .asset2 { top: 5%; right: 5%; }
+    .asset3 { bottom: 8%; right: 5%; }
+    .asset4 { bottom: 8%; left: 5%; }
+}
+.center-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f5f5f5;
+    text-align: center;
+    
+    /* Responsive thông minh */
+    width: 100%;
+    max-width: 430px;
+    
+    /* Giới hạn chiều cao để không bị tràn trên màn hình nhỏ/ngang */
+    max-height: 90vh; 
+    overflow-y: auto; /* Tự động thêm thanh cuộn nếu nội dung quá dài */
+
+    padding: 40px 30px;
+    border-radius: 40px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.024);
+}
+
+/* --- Media Queries cho điện thoại (dưới 600px) --- */
+@media (max-width: 600px) {
+    .center-box {
+              /* Cho box rộng thêm một chút để tận dụng không gian */
+        padding: 30px 20px;   /* Giảm bớt padding để nội dung bên trong thoải mái hơn */
+        border-radius: 30px;  /* Bo góc nhỏ lại một chút cho đỡ thô trên màn hình bé */
+    }
+}
+
+
+/* Chữ bên trong box */
+.box-text {
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Group chứa 2 nút bấm */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Khoảng cách giữa 2 nút */
+}
+
+/* Style cho 2 nút màu đen */
+.btn-black {
+    background-color: #1a1a1a; /* Màu đen */
+    color: white;
+    text-decoration: none; /* Bỏ gạch chân của thẻ a */
+    padding: 12px 35px;
+    border-radius: 20px; /* Bo tròn góc nút bấm */
+    font-size: 14px;
+    transition: all 0.3s ease; /* Hiệu ứng mượt khi di chuột vào */
+}
+
+/* Hiệu ứng khi di chuột vào nút (Hover) */
+.btn-black:hover {
+    background-color: #444;
+    transform: scale(1.05); /* Nút hơi to lên một chút */
+}
+.background-trail {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+    
+    /* Áp dụng đồng thời 2 hiệu ứng: Trôi nổi và Nhấp nháy */
+    animation: floatingTrail 6s ease-in-out infinite;
+       
+    
+    /* Giúp chuyển động mượt hơn trên màn hình retina */
+    backface-visibility: hidden;
+    filter: blur(0px); /* Bắt đầu với độ nét chuẩn */
+}
+
+/* Hiệu ứng trôi nổi lên xuống nhẹ nhàng */
+@keyframes floatingTrail {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0px);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-20px); /* Bay lên 20px */
+    }
+}
+
+/* Đảm bảo chong chóng và box ở trên dải màu */
+.windmill { z-index: 10; }
+.center-box { z-index: 20; }
+
+/* 1. Định nghĩa hiệu ứng lắc (Swing) */
+@keyframes swing-windmill {
+    0% {
+        transform: rotate(-5deg); /* Nghiêng sang trái 5 độ */
+    }
+    50% {
+        transform: rotate(5deg);  /* Nghiêng sang phải 5 độ */
+    }
+    100% {
+        transform: rotate(-5deg); /* Quay về bên trái */
+    }
+}
+
+/* 2. Áp dụng hiệu ứng vào các Asset chong chóng */
+.windmill {
+    /* Tên hiệu ứng | Thời gian 1 chu kỳ | Kiểu chạy mượt | Chạy vô tận | Chạy đi chạy lại */
+    animation: swing-windmill 3s ease-in-out infinite alternate;
+    
+    /* Xác định điểm gốc để lắc là ở cuối cái cán (stick) */
+    transform-origin: bottom center; 
+}
+.windmill {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 1. Hiệu ứng xoay tròn (giữ nguyên) */
+@keyframes spin-fast {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 1. Cấu trúc tổng quát cho Windmill */
+.windmill {
+    /* Giữ nguyên các thuộc tính vị trí cũ */
+    transition: transform 0.4s ease-out; /* Mượt khi thu nhỏ/phóng to */
+    cursor: pointer;
+    transform-origin: bottom center;
+}
+
+/* 2. Cấu trúc cho SVG (Cánh chong chóng) */
+.windmill svg {
+    /* QUAN TRỌNG: Giúp cánh quay về vị trí 0 độ mượt mà khi bỏ chuột ra */
+    transition: transform 1s ease-in-out; 
+}
+
+/* --- KHI HOVER --- */
+
+/* Cả cái cây thu nhỏ lại */
+.windmill:hover {
+    transform: scale(0.5) translateY(10px); /* Thu nhỏ và dịch xuống một chút để tạo hiệu ứng "bị gió thổi mạnh" */
+}
+
+/* Cánh xoay tròn liên tục */
+.windmill:hover svg {
+    animation: spin-fast 1s linear infinite;
+}
+
+/* --- KHI RỜI CHUỘT (Cải thiện độ mượt) --- */
+
+/* Khi không còn hover, đảm bảo SVG quay về trạng thái tĩnh êm ái */
+.windmill svg {
+    transform: rotate(0deg);
+}
+
+/* Container chính căn giữa toàn màn hình */
+.main-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    /* Chia đều không gian để 3 khối luôn nằm trên 1 hàng */
+    justify-content: center; 
+    align-items: center;
+    background-color: #E6E5E5;
+    gap: 2vw; /* Khoảng cách giữa các khối cũng co giãn theo màn hình */
+    padding: 0 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+
+}
+/* Container bao quanh để làm mốc căn giữa */
+.visual-center-wrapper {
+    position:relative;
+    display: flex;
+    /* Responsive ở đây */
+    width: 90%;            /* Chiếm 90% chiều rộng màn hình nhỏ */
+    max-width: 480px;      /* Nhưng không bao giờ rộng quá 480px trên màn hình lớn */
+    aspect-ratio: 1 / 1;   /* Giữ tỉ lệ khung hình vuông (thay cho height cố định) */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Các lớp layer chung để chồng lên nhau */
+.visual-layer {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Asset 7: Vòng tròn vàng to nằm dưới cùng */
+.asset7 {
+    width: 80%;  /* Chiếm toàn bộ 600px của wrapper */
+    z-index: 1;   /* Lớp thấp */
+}
+
+.asset7 svg {
+    width: 100%;
+    height: auto;
+}
+
+/* Asset 6: Chong chóng tím nằm đè lên trên */
+.asset6 {
+    width: 65%;   /* Thu nhỏ lại để nằm vừa vào khoảng trống trắng của Asset 7 */
+    z-index: 2;   /* Lớp cao hơn để đè lên */
+    pointer-events: none; /* Giúp bạn vẫn có thể click xuyên qua chong chóng nếu cần */
+}
+
+.asset6 img {
+    width: 100%;
+    height: auto;
+    /* Nếu hình ảnh PNG bị lệch tâm nhẹ, bạn dùng dòng dưới để tinh chỉnh */
+    /* transform: translate(0px, -5px); */
+}
+
+/* Tạo hiệu ứng xoay tròn 360 độ */
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.asset7 {
+    width: 80%;
+    z-index: 1;
+    
+    /* Áp dụng hiệu ứng xoay */
+    /* Tên | Thời gian (20s là chậm vừa phải) | Kiểu chạy đều | Vô tận */
+    animation: spin-slow 20s linear infinite;
+    
+    /* Đảm bảo xoay quanh tâm */
+    transform-origin: center; 
+}
+
+/* Khi hover vào wrapper hoặc chính asset7 thì dừng xoay */
+.visual-center-wrapper:hover .asset7{
+    animation-play-state: paused; /* Lệnh tạm dừng animation */
+    cursor: default;
+}
+
+
+.home-page {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Khóa cuộn dọc và ngang */
+    margin: 0;
+    padding: 0;
+}
+.back-btn {
+    position: fixed;
+    /* Đẩy xuống thấp hơn để thoáng hơn: tối thiểu 30px, tối đa 50px tùy màn hình */
+    top: calc(env(safe-area-inset-top) + clamp(30px, 5vh, 50px));
+    left: clamp(20px, 4vw, 40px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: none;
+    padding: 12px; /* Tăng vùng chạm thêm chút nữa */
+    margin: -12px; 
+    cursor: pointer;
+    font-family: sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    z-index: 10;
+    color: black;
+    transition: opacity 0.3s ease;
+    text-decoration: none;
+}
+
+.back-btn:hover {
+    opacity: 0.6;
+}
+@media (max-width: 768px) {
+    .back-btn {
+        /* Trên mobile, 30px-40px là khoảng cách "vàng" để không chạm tai thỏ 
+           nhưng cũng không chiếm quá nhiều diện tích nội dung */
+        top: calc(env(safe-area-inset-top) + 30px);
+        left: 20px;
+        font-size: 14px;
+    }
+}
+
+.back-btn img {
+  width: 20px;
+  height: auto;
+}
+
+/* Khung chứa bộ đôi Asset 8 & 9 */
+.visual-left-wrapper {
+    position: relative;
+    top: 50%; /* Giữ ở giữa theo chiều dọc */
+    left: 25px; /* Đẩy cách lề trái 50px (tùy chỉnh số này) */
+    transform: translateY(-50%); /* Chỉ căn giữa dọc, không căn giữa ngang */
+    width: 300px; /* Độ rộng của vòng tròn to nhất (Asset 8) */
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 1
+}
+
+/* Các lớp layer để xếp chồng */
+.asset-layer {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Asset 8: Vòng tròn nâu nằm dưới */
+.asset8 {
+    width: 80%;
+    z-index: 1;
+}
+
+/* Asset 9: Vòng tròn chữ & chong chóng nằm trên */
+.asset9 {
+    width: 95%; /* Nhỏ hơn một chút để lọt lòng Asset 8 */
+    z-index: 2;
+    animation: spin-slow 20s linear infinite;
+    
+    /* Đảm bảo xoay quanh tâm */
+    transform-origin: center; 
+}
+
+/* Đảm bảo SVG hiển thị đúng */
+.asset-layer svg {
+    width: 100%;
+    height: auto;
+}
+/* Thiết lập trạng thái ban đầu để chuyển động mượt mà */
+.visual-left-wrapper {
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer; /* Biến con trỏ thành hình bàn tay để biết là click được */
+}
+
+/* Hiệu ứng khi di chuột (Hover) vào cụm bên trái */
+.visual-left-wrapper:hover{
+    /* 1. Phóng to nhẹ 1.05 lần */
+    /* Lưu ý: Nếu bạn đang dùng translateY(-50%) để căn giữa dọc, 
+       phải giữ nguyên nó trong lệnh transform này */
+    transform: translateY(-50%) scale(1.05); 
+    /* 2. Làm sáng lên một chút */
+    filter: brightness(1.1) drop-shadow(0 0 15px rgba(230, 205, 77, 0.4));
+    
+}
+.visual-left-wrapper:hover .asset9{
+    animation-play-state: paused; /* Tạm dừng hiệu ứng xoay khi hover */
+}
+.visual-right-wrapper:hover{
+    transform: translateY(-50%) scale(1.05); 
+    /* 2. Làm sáng lên một chút */
+    filter: brightness(1.1) drop-shadow(0 0 15px rgba(175, 131, 50, 0.513));
+}
+.visual-right-wrapper:hover .asset11{
+    animation-play-state: paused; /* Tạm dừng hiệu ứng xoay khi hover */
+}
+
+/* Hiệu ứng khi nhấn chuột xuống (Active) */
+.visual-left-wrapper:active, .visual-right-wrapper:active {
+    transform: translateY(-50%) scale(0.98); /* Nhấn lún xuống tạo cảm giác như nút bấm thật */
+}
+
+/* Container chính bao ngoài cụm bên phải */
+.visual-right-wrapper {
+    flex-shrink: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Các lớp layer xếp chồng */
+.asset-layer {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.asset-layer svg {
+    width: 100%;
+    height: auto;
+}
+
+/* Asset 11 nằm dưới cùng */
+.asset11 {
+    width: 100%; /* To nhất */
+    z-index: 1;
+}
+
+/* Asset 10 nằm đè lên trên */
+.asset10 {
+    width: 85%; /* Nhỏ hơn một chút để thấy viền Asset 11 */
+    z-index: 2;
+}
+
+.asset10 {
+    width: 80%;
+    z-index: 1;
+}
+
+/* Asset 9: Vòng tròn chữ & chong chóng nằm trên */
+.asset11 {
+    width: 95%; /* Nhỏ hơn một chút để lọt lòng Asset 8 */
+    z-index: 2;
+    animation: spin-slow 20s linear infinite;
+    
+    /* Đảm bảo xoay quanh tâm */
+    transform-origin: center; 
+}
+
+.background-trail2 {
+    position: fixed; /* Hoặc absolute tùy theo bạn có muốn nó cuộn theo trang không */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%); /* Căn giữa màn hình, dịch lên 5% để khớp hình mẫu */
+    
+    width: 95vw;  /* Độ rộng chiếm gần hết chiều ngang màn hình */
+    height: auto;
+    
+    z-index: -1;   /* Luôn nằm dưới các asset khác */
+    pointer-events: none; /* User có thể click xuyên qua dải màu này để bấm nút */
+    opacity: 0.9;  /* Chỉnh độ mờ nếu cần */
+      z-index: 1;
+    pointer-events: none;
+    
+    /* Áp dụng đồng thời 2 hiệu ứng: Trôi nổi và Nhấp nháy */
+    animation: 
+        floatingTrail 6s ease-in-out infinite,
+        glowingTrail 4s ease-in-out infinite;
+    
+    /* Giúp chuyển động mượt hơn trên màn hình retina */
+    backface-visibility: hidden;
+    filter: blur(0px); /* Bắt đầu với độ nét chuẩn */
+}
+
+/* Hiệu ứng trôi nổi lên xuống nhẹ nhàng */
+@keyframes floatingTrail {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0px);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-20px); /* Bay lên 20px */
+    }
+}
+
+.background-trail2 svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.visual-center-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 35vw; 
+    height: 35vw;
+    max-width: 480px;
+    min-width: 300px; /* Không để khối giữa quá nhỏ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.visual-left-wrapper, 
+.visual-right-wrapper {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    /* Tăng kích thước lên so với code trước */
+    width: 25vw; 
+    height: 25vw;
+    max-width: 350px; /* Tăng từ 300 lên 350 để to hơn */
+    min-width: 180px; /* Giới hạn để vẫn đọc được chữ */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.visual-left-wrapper {
+    left: 2%; /* Dùng % sát lề để nhường chỗ cho vòng tròn to ra */
+}
+
+.visual-right-wrapper {
+    right: 2%;
+}
+
+
+
+/* Container bao ngoài của SVG kẻ dòng thẳng */
+.layout-straight-lines {
+    position: fixed; /* Hoặc absolute tùy theo bạn có muốn nó cuộn theo trang không */
+    top: 0;
+    left: 0;
+    
+    /* Chiều rộng chiếm toàn bộ chiều ngang màn hình */
+    width: 100vw; 
+    
+    /* Chiều cao chiếm toàn bộ chiều dọc màn hình */
+    height: 100vh; 
+    
+    /* Nằm trên Asset 12 (z-index: 0) nhưng dưới các Wrapper (z-index: 10) */
+    z-index: 1; 
+    
+    /* User có thể click xuyên qua đường kẻ */
+    pointer-events: none; 
+    
+    /* Tạo độ mờ nhẹ để đường kẻ trông tự nhiên */
+  
+}
+
+/* Style chung cho 2 đường kẻ path */
+.straight-line {
+    stroke: #000000; /* Màu đen */
+    stroke-width: 0.5px; /* Độ dày đường kẻ */
+}
+
+/* Container tổng bao quanh cả video và hình nền */
+.video-container {
+    position: absolute;
+    top: 50%;
+    left: 20%; /* Đẩy sát lề trái layout (điều chỉnh % này để khớp với hình) */
+    margin-top: -240px;
+ 
+    width: 55%; /* Độ rộng tổng thể của cụm bên trái */
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+   
+     /* Số dương sẽ đẩy khối xuống thấp hơn */
+}
+
+
+/* Lớp hình nền (Hình chữ nhật màu tím vàng) */
+
+  .bg-video-wrapper {
+    position: absolute;
+    width: 100%; /* Độ rộng vừa phải để bao quanh video */
+    height: 100%; /* Cao hơn một chút để tạo viền */
+    
+    /* CĂN GIỮA HOÀN HẢO */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    
+    z-index: 1;
+    pointer-events: none; /* Rất quan trọng: để không bấm nhầm vào nền thay vì nút */
+}
+
+
+.bg-video-wrapper svg {
+    width: 100%; /* Đảm bảo SVG co giãn theo container */
+    height: auto;
+    display: block;
+}
+
+/* Lớp chứa Video (Nằm trên nền) */
+.tutorial-video {
+    top: 34px;
+    position: relative;
+    z-index: 2; /* Nằm trên nền tím */
+    /* Điều chỉnh vị trí và kích thước để video nằm vừa trong khung vàng của SVG */
+    width: 88%; 
+    /* Dịch lên/xuống tùy thuộc vào hình dáng SVG của bạn */
+}
+
+.tutorial-video video {
+    width: 100%;
+    display: block;
+    border-radius: 65px; /* Bo góc để video khớp với đường cong của khung */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Tạo chiều sâu */
+}
+
+/* Container bảng Steps */
+.steps-panel {
+    position: absolute;
+    top: 50%;
+    right: 5%; 
+    transform: translateY(-50%);
+    
+    /* SỬA Ở ĐÂY: Dùng max-width thay vì width */
+    width: 25%;           /* Chiếm 25% chiều rộng màn hình */
+    min-width: 200px;     /* Nhưng không được nhỏ hơn 200px để tránh nát chữ */
+    max-width: 300px;     /* Và không to quá 300px trên màn hình lớn */
+    
+    background-color: rgba(245, 245, 245, 0.9);
+    border-radius: 40px;
+    padding: 5% 2%;       /* Dùng % để padding cũng co giãn theo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    box-sizing: border-box; /* Đảm bảo padding không làm nở thêm width */
+}
+@media (max-width: 1024px) {
+    /* Khi màn hình bắt đầu chật (máy tính bảng) */
+    .steps-panel {
+        right: 2%; /* Sát lề hơn một chút */
+        width: 30%;
+    }
+}
+
+
+    
+    /* Nhớ sửa cả video-container của bạn về position: relative ở mức màn hình này */
+.video-container {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 100%;
+        margin-bottom: 20px;
+    
+}
+
+/* Tiêu đề * STEPS * */
+.steps-title {
+    font-size: 18px;
+    color: #000;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+}
+
+/* Danh sách nút bấm */
+.steps-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Khoảng cách giữa các nút */
+}
+
+/* Style chung cho nút Step */
+.step-btn {
+    width: 100%;
+    padding: 15px 10px;
+    background-color: #1a1a1a; /* Màu đen của nút */
+    color: #fff;
+    border: none;
+    border-radius: 50px; /* Bo góc dạng viên thuốc (pill shape) */
+    font-family: 'OCR A Std', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* Hiệu ứng khi Hover (Rê chuột vào) */
+.step-btn:hover {
+    background-color: #333;
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Trạng thái nút đang được chọn (Active) */
+.step-btn.active {
+    background-color: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* Bạn có thể thêm màu vàng nhạt nếu muốn nút đang chọn nổi bật hơn */
+}
+
+/* Responsive: Nếu màn hình nhỏ thì bảng Steps sẽ nhỏ lại */
+
+
+/* Container bao quanh */
+.video-container {
+    position: absolute;
+    top: 50%;
+    left: 5%; /* Vị trí bên trái như bạn yêu cầu */
+    width: 55%;
+    z-index: 10;
+}
+
+
+/* Thanh điều khiển tự chế */
+.custom-controls {
+    /* Màu tím khớp Asset 13 */
+    padding: 40px;
+    border-radius: 0 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10;
+    margin-top: 5px;
+   
+}
+
+/* Tùy chỉnh thanh Timeline (Seek Bar) */
+.seek-bar {
+    width: 100%;
+    cursor: pointer;
+    accent-color: #f4da7c; /* Màu vàng của Asset */
+}
+
+.control-row-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 220px; /* Cho Desktop */
+}
+
+/* Cho máy tính bảng hoặc laptop nhỏ */
+@media (max-width: 1024px) {
+    .control-row-bottom {
+        gap: 100px;
+    }
+}
+
+/* Cho điện thoại */
+@media (max-width: 768px) {
+    .control-row-bottom {
+        gap: 10px; /* Giảm mạnh gap để các nút không bị đẩy ra ngoài */
+        justify-content: space-evenly; /* Chia đều không gian còn lại */
+    }
+    
+    /* Nếu nút vẫn to quá, có thể thu nhỏ nút lại */
+    .ui-btn {
+        min-width: 80px; 
+        font-size: 12px;
+    }
+}
+.ui-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* Thiết lập kích thước cố định để nút không bị co giãn khi đổi chữ */
+    min-width: 110px; 
+    height: 40px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'OCR A Std', monospace;
+    font-size: 15px;
+    transition: background 0.3s;
+    gap: 10px;
+}
+
+.ui-btn:hover {
+    background: #222;
+}
+
+.icon-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* Style cho các SVG */
+.ui-btn svg {
+    width: 16px;
+    height: 16px;
+}
+.left-btns {
+    display: flex;
+    align-items: center; /* Căn tất cả các con theo trục giữa nằm ngang */
+    gap: 10px;
+}
+
+#resumeBtn {
+   
+}
+
+/* Mặc định: hiện Play, ẩn Pause */
+.icon-pause {
+    display: none 
+}
+.icon-play {
+    display: block 
+}
+
+/* Khi video đang chạy (nút có class .playing): ẩn Play, hiện Pause */
+.ui-btn.playing .icon-play {
+    display: none 
+}
+.ui-btn.playing .icon-pause {
+    display: block 
+}
+
+/* Căn chỉnh để không bị lệch như trong ảnh của bạn */
+.icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Media Query: Khi màn hình nhỏ hơn 1024px (hoặc tùy độ rộng bạn muốn) */
+@media (max-width: 1024px) {
+    
+    /* 1. Đưa container tổng về relative để nó không căn giữa màn hình nữa */
+    .video-container {
+        position: relative ;
+        top: 0 ;
+        left: 0 ;
+        transform: none ;
+        width: 90% ; /* Chiếm gần hết chiều rộng */
+        margin: 20px auto ; /* Căn giữa bằng margin */
+    }
+
+    /* 2. Đưa bảng STEPS về relative để nó nhảy xuống dưới Video */
+    .steps-panel {
+        position: relative ;
+        top: 0 ;
+        right: 0 ;
+        transform: none ;
+        width: 90% ;
+        margin: 40px auto ; /* Tạo khoảng cách với video ở trên */
+        max-width: 400px; /* Giới hạn độ rộng để không bị quá bè */
+    }
+
+    /* 3. Đảm bảo Body có thể cuộn được khi nội dung dài ra */
+    body {
+        overflow-y: auto ;
+        height: auto;
+        display: block ;
+    }
+}
