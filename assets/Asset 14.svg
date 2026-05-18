@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 30.29 30.41">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#radial-gradient-4);
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8 {
+        stroke-miterlimit: 10;
+        stroke-width: .34px;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-8 {
+        stroke: #75432f;
+      }
+
+      .cls-2 {
+        fill: url(#radial-gradient-2);
+      }
+
+      .cls-3 {
+        fill: url(#radial-gradient-3);
+      }
+
+      .cls-4 {
+        fill: url(#radial-gradient-6);
+      }
+
+      .cls-4, .cls-5, .cls-6, .cls-7 {
+        stroke: #d8da8f;
+      }
+
+      .cls-5 {
+        fill: url(#radial-gradient-7);
+      }
+
+      .cls-6 {
+        fill: url(#radial-gradient-8);
+      }
+
+      .cls-7 {
+        fill: url(#radial-gradient-5);
+      }
+
+      .cls-8 {
+        fill: url(#radial-gradient);
+      }
+
+      .cls-9 {
+        fill: #fbfbfb;
+      }
+    </style>
+    <radialGradient id="radial-gradient" cx="-733.16" cy="-641.13" fx="-733.16" fy="-641.13" r="7.49" gradientTransform="translate(-433.93 -842.51) rotate(-158.33)" gradientUnits="userSpaceOnUse">
+      <stop offset=".22" stop-color="#75432f" stop-opacity=".3"/>
+      <stop offset=".44" stop-color="#75432f" stop-opacity=".47"/>
+      <stop offset=".9" stop-color="#75432f" stop-opacity=".89"/>
+      <stop offset="1" stop-color="#75432f"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-2" cx="-744.23" cy="-633.74" fx="-744.23" fy="-633.74" r="7.58" xlink:href="#radial-gradient"/>
+    <radialGradient id="radial-gradient-3" cx="-735.72" cy="-622.05" fx="-735.72" fy="-622.05" r="8.48" xlink:href="#radial-gradient"/>
+    <radialGradient id="radial-gradient-4" cx="-725.28" cy="-630.44" fx="-725.28" fy="-630.44" r="8.17" xlink:href="#radial-gradient"/>
+    <radialGradient id="radial-gradient-5" cx="-737.75" cy="-638.29" fx="-737.75" fy="-638.29" r="5.77" gradientTransform="translate(-433.93 -842.51) rotate(-158.33)" gradientUnits="userSpaceOnUse">
+      <stop offset=".22" stop-color="#d8da8f" stop-opacity=".3"/>
+      <stop offset=".35" stop-color="#d8da8f" stop-opacity=".39"/>
+      <stop offset=".61" stop-color="#d8da8f" stop-opacity=".62"/>
+      <stop offset=".99" stop-color="#d8da8f" stop-opacity=".99"/>
+      <stop offset="1" stop-color="#d8da8f"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-6" cx="-727.64" cy="-636.58" fx="-727.64" fy="-636.58" r="5.55" xlink:href="#radial-gradient-5"/>
+    <radialGradient id="radial-gradient-7" cx="-730.42" cy="-625.51" fx="-730.42" fy="-625.51" r="5.61" xlink:href="#radial-gradient-5"/>
+    <radialGradient id="radial-gradient-8" cx="-741.07" cy="-627.9" fx="-741.07" fy="-627.9" r="5.58" xlink:href="#radial-gradient-5"/>
+  </defs>
+  <g id="ALL">
+    <g>
+      <g>
+        <g>
+          <path class="cls-8" d="M13.96,29.67c-2.1.2-7.61.36-11.99.42,1.45-1.41,7.73-8.65,12.74-13.93l.78,11.56-1.33,1.84c-.05.06-.12.1-.19.11Z"/>
+          <path class="cls-2" d="M30.04,29.87l-.23-.06-13.86-13.74,11.86.72,1.09,1.18c.14.15.23.33.28.52.58,2.4.7,7.01.86,11.39Z"/>
+          <path class="cls-3" d="M29.79.21c-4.94,4.29-9.67,10.15-14.5,16.04l-1.09-11.57,1.59-2.39c.1-.16.26-.27.44-.31C20.29.93,24.82.53,29.79.21Z"/>
+          <path class="cls-1" d="M.18,2.08c3.19,3.22,9.64,8.84,15.63,14.62l-13.91-1.35-.62-.56c-.1-.09-.17-.21-.21-.35C.46,12.01.32,6.93.18,2.08Z"/>
+        </g>
+        <g>
+          <path class="cls-7" d="M15.87,15.8s5.2,4.9,5.55,6.03l-7.42,7.73s1.17-2.6-.14-13.6l2.01-.16Z"/>
+          <path class="cls-4" d="M14.46,17.7s-4.73,5.47-5.56,5.12L1.14,14.88c2.91.96,7.85.83,13.01,1.28l.3,1.54Z"/>
+          <path class="cls-5" d="M14.42,15.73c-3.05-1.81-5.84-4.16-6.08-5.56l7.42-7.91c-2.43,5,.2,12.58.05,13.65-.1-.06-1.4-.19-1.4-.19Z"/>
+          <path class="cls-6" d="M28.61,17.6l-7.45-8.6c-.76.26-4.25,3.24-5.5,6.57l.28,1.3c4.83-.16,9.11-.68,12.67.73Z"/>
+        </g>
+      </g>
+      <circle class="cls-9" cx="15.23" cy="16.02" r="1.21"/>
+    </g>
+  </g>
+</svg>

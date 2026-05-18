@@ -4,18 +4,22 @@
     font-weight: normal;
     src: local('OCR A Std'), url('fonts/OCRAStd.woff');
 }
+.share-tech-mono-regular {
+  font-family: "Share Tech Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
+    overflow: hidden;
     min-height: 100vh;
     background-color: #E6E5E5; /* Màu xám nhạt đồng bộ */
     font-family: 'OCR A Std', monospace;
     font-weight: 200;
-  
- /* Đảm bảo font chữ thống nhất */
 }
-
 
 /* Container bao phủ toàn màn hình */
 .landing-container {
@@ -127,7 +131,7 @@ html, body {
     padding: 40px 30px;
     border-radius: 40px;
     box-sizing: border-box;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.024);
+   
 }
 
 /* --- Media Queries cho điện thoại (dưới 600px) --- */
@@ -155,8 +159,15 @@ html, body {
 
 /* Style cho 2 nút màu đen */
 .btn-black {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 43px;
+    cursor: pointer;
     background-color: #1a1a1a; /* Màu đen */
     color: white;
+    font-family: 'OCR A Std', monospace;
     text-decoration: none; /* Bỏ gạch chân của thẻ a */
     padding: 12px 35px;
     border-radius: 20px; /* Bo tròn góc nút bấm */
@@ -181,10 +192,6 @@ html, body {
     
     /* Áp dụng đồng thời 2 hiệu ứng: Trôi nổi và Nhấp nháy */
     animation: floatingTrail 6s ease-in-out infinite;
-       
-    
-    /* Giúp chuyển động mượt hơn trên màn hình retina */
-    backface-visibility: hidden;
     filter: blur(0px); /* Bắt đầu với độ nét chuẩn */
 }
 
@@ -375,13 +382,12 @@ html, body {
     padding: 12px; /* Tăng vùng chạm thêm chút nữa */
     margin: -12px; 
     cursor: pointer;
-    font-family: sans-serif;
-    font-size: 14px;
-    letter-spacing: 0.5px;
-    z-index: 10;
+    z-index: 101;
     color: black;
     transition: opacity 0.3s ease;
     text-decoration: none;
+    font-size: 15px;
+    font-family: sans-serif;
 }
 
 .back-btn:hover {
@@ -541,7 +547,7 @@ html, body {
     z-index: -1;   /* Luôn nằm dưới các asset khác */
     pointer-events: none; /* User có thể click xuyên qua dải màu này để bấm nút */
     opacity: 0.9;  /* Chỉnh độ mờ nếu cần */
-      z-index: 1;
+    z-index: 1;
     pointer-events: none;
     
     /* Áp dụng đồng thời 2 hiệu ứng: Trôi nổi và Nhấp nháy */
@@ -611,8 +617,6 @@ html, body {
     right: 2%;
 }
 
-
-
 /* Container bao ngoài của SVG kẻ dòng thẳng */
 .layout-straight-lines {
     position: fixed; /* Hoặc absolute tùy theo bạn có muốn nó cuộn theo trang không */
@@ -646,7 +650,7 @@ html, body {
     position: absolute;
     top: 50%;
     left: 20%; /* Đẩy sát lề trái layout (điều chỉnh % này để khớp với hình) */
-    margin-top: -240px;
+    margin-top: -285px;
  
     width: 55%; /* Độ rộng tổng thể của cụm bên trái */
     height: auto;
@@ -700,35 +704,6 @@ html, body {
     box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Tạo chiều sâu */
 }
 
-/* Container bảng Steps */
-.steps-panel {
-    position: absolute;
-    top: 50%;
-    right: 5%; 
-    transform: translateY(-50%);
-    
-    /* SỬA Ở ĐÂY: Dùng max-width thay vì width */
-    width: 25%;           /* Chiếm 25% chiều rộng màn hình */
-    min-width: 200px;     /* Nhưng không được nhỏ hơn 200px để tránh nát chữ */
-    max-width: 300px;     /* Và không to quá 300px trên màn hình lớn */
-    
-    background-color: rgba(245, 245, 245, 0.9);
-    border-radius: 40px;
-    padding: 5% 2%;       /* Dùng % để padding cũng co giãn theo */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 10;
-    box-sizing: border-box; /* Đảm bảo padding không làm nở thêm width */
-}
-@media (max-width: 1024px) {
-    /* Khi màn hình bắt đầu chật (máy tính bảng) */
-    .steps-panel {
-        right: 2%; /* Sát lề hơn một chút */
-        width: 30%;
-    }
-}
-
 
     
     /* Nhớ sửa cả video-container của bạn về position: relative ở mức màn hình này */
@@ -741,55 +716,6 @@ html, body {
         margin-bottom: 20px;
     
 }
-
-/* Tiêu đề * STEPS * */
-.steps-title {
-    font-size: 18px;
-    color: #000;
-    margin-bottom: 25px;
-    letter-spacing: 2px;
-}
-
-/* Danh sách nút bấm */
-.steps-list {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 12px; /* Khoảng cách giữa các nút */
-}
-
-/* Style chung cho nút Step */
-.step-btn {
-    width: 100%;
-    padding: 15px 10px;
-    background-color: #1a1a1a; /* Màu đen của nút */
-    color: #fff;
-    border: none;
-    border-radius: 50px; /* Bo góc dạng viên thuốc (pill shape) */
-    font-family: 'OCR A Std', monospace;
-    font-size: 11px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    text-align: center;
-}
-
-/* Hiệu ứng khi Hover (Rê chuột vào) */
-.step-btn:hover {
-    background-color: #333;
-    transform: scale(1.03);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-/* Trạng thái nút đang được chọn (Active) */
-.step-btn.active {
-    background-color: #1a1a1a;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    /* Bạn có thể thêm màu vàng nhạt nếu muốn nút đang chọn nổi bật hơn */
-}
-
-/* Responsive: Nếu màn hình nhỏ thì bảng Steps sẽ nhỏ lại */
-
 
 /* Container bao quanh */
 .video-container {
@@ -810,7 +736,7 @@ html, body {
     flex-direction: column;
     gap: 10px;
     z-index: 10;
-    margin-top: 5px;
+    margin-top: 1px;
    
 }
 
@@ -823,10 +749,27 @@ html, body {
 
 .control-row-bottom {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
+    margin-top: -10px;
     gap: 220px; /* Cho Desktop */
+}
+.control-row-top {
+    width: 90%;
+    margin: 0 auto;       /* BỔ SUNG: Ép nguyên cả khối 90% này phải nằm chính giữa khung tím */
+    display: flex;        /* Đảm bảo các phần tử bên trong hoạt động theo dạng flex */
+    justify-content: center; /* Căn giữa các thành phần con */
+    align-items: center;
+}
+
+/* 2. Đảm bảo container bọc slider tự căn giữa */
+.timeline-container {
+    position: relative;
+    width: 100%;          /* Chiếm trọn 100% không gian của khối .control-row-top (tức là 90% tổng thể) */
+    margin: 0 auto;       /* BỔ SUNG: Giữ cho hộp chứa luôn ở trung tâm */
+    padding: 10px 0;   
+    display: block;       
 }
 
 /* Cho máy tính bảng hoặc laptop nhỏ */
@@ -848,13 +791,25 @@ html, body {
         min-width: 80px; 
         font-size: 12px;
     }
+
+    
 }
 .ui-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    /* Thiết lập kích thước cố định để nút không bị co giãn khi đổi chữ */
-    min-width: 110px; 
+    
+    /* BỎ chiều rộng cố định */
+    /* min-width: 110px; */ 
+    
+    /* DÙNG padding để tạo khoảng cách 2 bên chữ */
+    /* (Trên/Dưới: 0px, Trái/Phải: 20px) */
+    padding: 0 20px; 
+    
+    /* Cho phép nút tự động lấy chiều rộng theo nội dung */
+    width: auto; 
+    
+    /* Giữ nguyên các thuộc tính khác */
     height: 40px;
     background: #000;
     color: #fff;
@@ -865,8 +820,10 @@ html, body {
     font-size: 15px;
     transition: background 0.3s;
     gap: 10px;
+    
+    /* Ngăn chữ bị xuống dòng khi nút co lại */
+    white-space: nowrap; 
 }
-
 .ui-btn:hover {
     background: #222;
 }
@@ -887,9 +844,6 @@ html, body {
     gap: 10px;
 }
 
-#resumeBtn {
-   
-}
 
 /* Mặc định: hiện Play, ẩn Pause */
 .icon-pause {
@@ -914,6 +868,7 @@ html, body {
     justify-content: center;
 }
 
+
 /* Media Query: Khi màn hình nhỏ hơn 1024px (hoặc tùy độ rộng bạn muốn) */
 @media (max-width: 1024px) {
     
@@ -927,16 +882,6 @@ html, body {
         margin: 20px auto ; /* Căn giữa bằng margin */
     }
 
-    /* 2. Đưa bảng STEPS về relative để nó nhảy xuống dưới Video */
-    .steps-panel {
-        position: relative ;
-        top: 0 ;
-        right: 0 ;
-        transform: none ;
-        width: 90% ;
-        margin: 40px auto ; /* Tạo khoảng cách với video ở trên */
-        max-width: 400px; /* Giới hạn độ rộng để không bị quá bè */
-    }
 
     /* 3. Đảm bảo Body có thể cuộn được khi nội dung dài ra */
     body {
@@ -944,4 +889,571 @@ html, body {
         height: auto;
         display: block ;
     }
+}
+
+.speed-wrapper {
+    display: flex;
+    align-items: center;
+    background: #000;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    height: 40px;
+}
+
+.speed-wrapper:hover {
+    padding-right: 15px;
+}
+
+.speed-control {
+    width: 0;
+    opacity: 0;
+    transition: width 0.3s ease, opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.speed-wrapper:hover .speed-control {
+    width: 120px; /* Độ rộng đủ cho slider và chữ số */
+    opacity: 1;
+    margin-left: 5px;
+}
+
+#speedSlider {
+    width: 70px;
+    cursor: pointer;
+    accent-color: #E6CD4D; /* Màu vàng đồng bộ với progress bar */
+}
+
+#playspeedBtn {
+    min-width: 40px !important;
+    padding: 0 10px !important;
+    background: transparent;
+}
+
+#volumeBtn svg {
+     /* Hoặc kích thước bất kỳ bạn muốn hiển thị */
+    height: auto;  /* Giữ tỷ lệ icon */
+    display: block;
+}
+.volume-wrapper {
+    display: flex;
+    align-items: center;
+    background: #000; /* Màu nền đen đồng bộ với button */
+    border-radius: 20px;
+    padding-right: 0;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    height: 40px;
+}
+
+/* Khi hover vào toàn bộ cụm volume */
+.volume-wrapper:hover {
+    padding-right: 15px; /* Tạo khoảng trống cho slider */
+}
+
+.volume-control {
+    width: 0;
+    opacity: 0;
+    transition: width 0.3s ease, opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.volume-wrapper:hover .volume-control {
+    width: 80px; /* Độ dài thanh trượt hiện ra */
+    opacity: 1;
+    margin-left: 5px;
+}
+
+#volumeSlider {
+    width: 100%;
+    cursor: pointer;
+    accent-color: #A85197; /* Màu tím theo tone progress bar của bạn */
+    height: 4px;
+}
+
+/* Tùy chỉnh thêm để button volume không bị bo tròn quá mức khi có slider đi kèm */
+#volumeBtn {
+    min-width: 40px !important;
+    padding: 0 10px !important;
+    background: transparent; /* Để lộ nền đen của wrapper */
+}
+
+
+.progress-container {
+    scale: 0.9;
+    position: fixed; /* Cố định bên phải màn hình */
+    right: 70px;
+    overflow-x: hidden;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: url("data:image/svg+xml;utf8,<svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M19.6961 3.16675L19.6343 3.22691L19.6945 3.40425C20.3868 5.3848 21.52 7.18223 23.0084 8.66091C24.531 10.1931 26.3908 11.348 28.4392 12.0334L14.8859 25.5867C13.9707 26.5003 13.5131 26.9579 13.0096 27.3506C12.4151 27.8133 11.7722 28.2104 11.0922 28.5349C10.5159 28.8104 9.90315 29.0147 8.67606 29.4232L2.21131 31.5781C1.91548 31.6772 1.59789 31.6918 1.29419 31.6204C0.990487 31.549 0.712702 31.3944 0.492015 31.1738C0.271328 30.9533 0.116476 30.6756 0.0448412 30.372C-0.0267934 30.0683 -0.0123746 29.7507 0.0864794 29.4548L2.24298 22.9885C2.65148 21.763 2.85573 21.1502 3.12965 20.5739C3.45581 19.892 3.85112 19.2524 4.31556 18.6549C4.70823 18.1514 5.16581 17.6954 6.0794 16.7818L19.6961 3.16675Z' fill='black'/><path opacity='0.5' d='M29.8452 10.629C30.4233 10.0508 30.8819 9.36434 31.1948 8.60887C31.5076 7.8534 31.6686 7.0437 31.6685 6.22602C31.6684 5.40833 31.5073 4.59867 31.1943 3.84325C30.8814 3.08784 30.4226 2.40147 29.8444 1.82333C29.2662 1.24519 28.5797 0.786603 27.8242 0.473756C27.0688 0.160909 26.2591 -7.34879e-05 25.4414 2.51661e-08C23.79 0.000148491 22.2063 0.656303 21.0387 1.82412L19.6343 3.22853L19.6944 3.40428C20.3868 5.38483 21.5199 7.18226 23.0084 8.66095C24.531 10.1931 26.3908 11.348 28.4392 12.0335L29.8452 10.629Z' fill='%23A85197'/></svg>") 0 31, auto !important;
+
+}
+
+.progress-bar {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.progress-bar li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px; /* Khoảng cách giữa các bước */
+    position: relative;
+    letter-spacing: -1px;
+}
+
+/* Tạo đường gạch nối dọc */
+.progress-bar li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 20px; /* Căn giữa theo vòng tròn số (40px/2) */
+    top: 40px;
+    width: 1.5px; /* Độ dày của đường kẻ */
+    height: 50px; /* Chiều cao khớp với margin-bottom */
+    background: #d6b43b;
+}
+
+.progress-bar li:hover .step-text {
+    opacity: 0.6; /* Đổi sang màu vàng khi hover */
+    cursor: url("data:image/svg+xml;utf8,<svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M19.6961 3.16675L19.6343 3.22691L19.6945 3.40425C20.3868 5.3848 21.52 7.18223 23.0084 8.66091C24.531 10.1931 26.3908 11.348 28.4392 12.0334L14.8859 25.5867C13.9707 26.5003 13.5131 26.9579 13.0096 27.3506C12.4151 27.8133 11.7722 28.2104 11.0922 28.5349C10.5159 28.8104 9.90315 29.0147 8.67606 29.4232L2.21131 31.5781C1.91548 31.6772 1.59789 31.6918 1.29419 31.6204C0.990487 31.549 0.712702 31.3944 0.492015 31.1738C0.271328 30.9533 0.116476 30.6756 0.0448412 30.372C-0.0267934 30.0683 -0.0123746 29.7507 0.0864794 29.4548L2.24298 22.9885C2.65148 21.763 2.85573 21.1502 3.12965 20.5739C3.45581 19.892 3.85112 19.2524 4.31556 18.6549C4.70823 18.1514 5.16581 17.6954 6.0794 16.7818L19.6961 3.16675Z' fill='black'/><path opacity='0.5' d='M29.8452 10.629C30.4233 10.0508 30.8819 9.36434 31.1948 8.60887C31.5076 7.8534 31.6686 7.0437 31.6685 6.22602C31.6684 5.40833 31.5073 4.59867 31.1943 3.84325C30.8814 3.08784 30.4226 2.40147 29.8444 1.82333C29.2662 1.24519 28.5797 0.786603 27.8242 0.473756C27.0688 0.160909 26.2591 -7.34879e-05 25.4414 2.51661e-08C23.79 0.000148491 22.2063 0.656303 21.0387 1.82412L19.6343 3.22853L19.6944 3.40428C20.3868 5.38483 21.5199 7.18226 23.0084 8.66095C24.531 10.1931 26.3908 11.348 28.4392 12.0335L29.8452 10.629Z' fill='%23A85197'/></svg>") 0 31, auto !important;
+
+}
+
+.check-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(168, 81, 151, 0.3); /* Dòng kẻ màu tím nhạt */
+    width: 100%;
+}
+
+/* Loại bỏ dòng kẻ ở mục cuối cùng nếu bạn muốn */
+.check-item:last-child {
+    border-bottom: none;
+}
+
+/* Vòng tròn số */
+.step-num {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #F4F4F4 0%, #A85197 70%);/* Màu tím gradient */
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    z-index: 1;
+    cursor: url("data:image/svg+xml;utf8,<svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M19.6961 3.16675L19.6343 3.22691L19.6945 3.40425C20.3868 5.3848 21.52 7.18223 23.0084 8.66091C24.531 10.1931 26.3908 11.348 28.4392 12.0334L14.8859 25.5867C13.9707 26.5003 13.5131 26.9579 13.0096 27.3506C12.4151 27.8133 11.7722 28.2104 11.0922 28.5349C10.5159 28.8104 9.90315 29.0147 8.67606 29.4232L2.21131 31.5781C1.91548 31.6772 1.59789 31.6918 1.29419 31.6204C0.990487 31.549 0.712702 31.3944 0.492015 31.1738C0.271328 30.9533 0.116476 30.6756 0.0448412 30.372C-0.0267934 30.0683 -0.0123746 29.7507 0.0864794 29.4548L2.24298 22.9885C2.65148 21.763 2.85573 21.1502 3.12965 20.5739C3.45581 19.892 3.85112 19.2524 4.31556 18.6549C4.70823 18.1514 5.16581 17.6954 6.0794 16.7818L19.6961 3.16675Z' fill='black'/><path opacity='0.5' d='M29.8452 10.629C30.4233 10.0508 30.8819 9.36434 31.1948 8.60887C31.5076 7.8534 31.6686 7.0437 31.6685 6.22602C31.6684 5.40833 31.5073 4.59867 31.1943 3.84325C30.8814 3.08784 30.4226 2.40147 29.8444 1.82333C29.2662 1.24519 28.5797 0.786603 27.8242 0.473756C27.0688 0.160909 26.2591 -7.34879e-05 25.4414 2.51661e-08C23.79 0.000148491 22.2063 0.656303 21.0387 1.82412L19.6343 3.22853L19.6944 3.40428C20.3868 5.38483 21.5199 7.18226 23.0084 8.66095C24.531 10.1931 26.3908 11.348 28.4392 12.0335L29.8452 10.629Z' fill='%23A85197'/></svg>") 0 31, auto;
+
+}
+
+/* Văn bản bên cạnh */
+.step-text {
+    margin-left: 20px;
+    font-size: 1.2rem;
+
+/* Tránh chữ bị xuống dòng */
+}
+
+/* Màu khi được Click (Active) */
+.progress-bar li.active .step-num {
+    /* 1. Sử dụng !important hoặc ghi đè trực tiếp thuộc tính background */
+    background: radial-gradient(circle, #e2dfdf 0%, #efce12 70%) !important;
+    
+    /* 2. Nếu bạn muốn màu vàng cũng có hiệu ứng tỏa sáng (gradient) cho đẹp: */
+    /* background: radial-gradient(circle, #FFF2A6 0%, #FFD700 100%) !important; */
+ 
+}
+
+/* Thêm hiệu ứng cho chữ khi active (nếu muốn) */
+.progress-bar li.active .step-text {
+    color: #A85197;
+    font-weight: bold;
+}
+
+.materials-checklist {
+    margin-bottom: 35px; /* Khoảng cách với progress bar phía dưới */
+    padding-left: 10px;
+    font-family: Kulim Park;
+    cursor: url("data:image/svg+xml;utf8,<svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M19.6961 3.16675L19.6343 3.22691L19.6945 3.40425C20.3868 5.3848 21.52 7.18223 23.0084 8.66091C24.531 10.1931 26.3908 11.348 28.4392 12.0334L14.8859 25.5867C13.9707 26.5003 13.5131 26.9579 13.0096 27.3506C12.4151 27.8133 11.7722 28.2104 11.0922 28.5349C10.5159 28.8104 9.90315 29.0147 8.67606 29.4232L2.21131 31.5781C1.91548 31.6772 1.59789 31.6918 1.29419 31.6204C0.990487 31.549 0.712702 31.3944 0.492015 31.1738C0.271328 30.9533 0.116476 30.6756 0.0448412 30.372C-0.0267934 30.0683 -0.0123746 29.7507 0.0864794 29.4548L2.24298 22.9885C2.65148 21.763 2.85573 21.1502 3.12965 20.5739C3.45581 19.892 3.85112 19.2524 4.31556 18.6549C4.70823 18.1514 5.16581 17.6954 6.0794 16.7818L19.6961 3.16675Z' fill='black'/><path opacity='0.5' d='M29.8452 10.629C30.4233 10.0508 30.8819 9.36434 31.1948 8.60887C31.5076 7.8534 31.6686 7.0437 31.6685 6.22602C31.6684 5.40833 31.5073 4.59867 31.1943 3.84325C30.8814 3.08784 30.4226 2.40147 29.8444 1.82333C29.2662 1.24519 28.5797 0.786603 27.8242 0.473756C27.0688 0.160909 26.2591 -7.34879e-05 25.4414 2.51661e-08C23.79 0.000148491 22.2063 0.656303 21.0387 1.82412L19.6343 3.22853L19.6944 3.40428C20.3868 5.38483 21.5199 7.18226 23.0084 8.66095C24.531 10.1931 26.3908 11.348 28.4392 12.0335L29.8452 10.629Z' fill='%23A85197'/></svg>") 0 31, auto !important;
+   
+    
+}
+
+.materials-checklist h3 {
+
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #9e6798;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+
+}
+.check-item {
+   
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 10px 0;
+    cursor: inherit;
+    font-size: 1rem;
+    user-select: none;
+    transition: color 0.2s;
+    border-bottom: 1px solid rgba(168, 81, 151, 0.3);
+}
+
+.check-item input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: relative;
+    height: 25px;
+    width: 25px;
+    background-color: transparent;
+    border: 1.5px solid #A85197;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-bottom: -8px;
+
+    /* Dùng Flexbox để căn giữa dấu tick bên trong */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+/* Khoảng cách cho chữ */
+.check-item .text {
+    margin-left: 15px;
+  
+}
+
+/* --- HIỆU ỨNG HOVER --- */
+.check-item:hover .text {
+    color:#A85197;
+}
+
+.check-item:hover .checkmark {
+    background-color: rgba(244, 218, 124, 0.3); /* Màu vàng nhạt khi hover */
+}
+
+/* --- KHI CHECKBOX ĐƯỢC TICK --- */
+.check-item input:checked ~ .checkmark {
+    background-color: #A85197;
+    border-color: #A85197;
+}
+
+.check-item input:checked ~ .text {
+    text-decoration: line-through;
+}
+
+/* --- ĐỊNH DẠNG DẤU TICK (CĂN GIỮA) --- */
+.checkmark:after {
+    content: "";
+    display: none; /* Ẩn mặc định */
+    
+    /* Vẽ dấu tick */
+    width: 5px;
+    height: 10px;
+    border: solid #ffffff;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+    
+    /* Nhích nhẹ để cân bằng thị giác do phép xoay 45 độ */
+    margin-top: -2px; 
+}
+
+.check-item input:checked ~ .checkmark:after {
+    display: block; /* Hiện khi tick */
+}
+
+.progress-container {
+    scale: 0.85;
+    position: fixed;
+    right: 70px;
+    top: 45%;
+    transform: translateY(-50%);
+    
+    
+    /* Thiết lập cho phép cuộn */
+    max-height: 100vh; /* Giới hạn chiều cao tối đa là 80% màn hình */
+    overflow-y: auto; /* Hiện thanh cuộn khi nội dung vượt quá max-height */
+    padding-right: 20px; /* Tạo khoảng trống để thanh cuộn không đè lên nội dung */
+    
+    /* Tùy chỉnh thanh cuộn cho gọn gàng */
+
+   /* Cho Firefox (màu thanh : màu nền) */
+    cursor: url("data:image/svg+xml;utf8,<svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M19.6961 3.16675L19.6343 3.22691L19.6945 3.40425C20.3868 5.3848 21.52 7.18223 23.0084 8.66091C24.531 10.1931 26.3908 11.348 28.4392 12.0334L14.8859 25.5867C13.9707 26.5003 13.5131 26.9579 13.0096 27.3506C12.4151 27.8133 11.7722 28.2104 11.0922 28.5349C10.5159 28.8104 9.90315 29.0147 8.67606 29.4232L2.21131 31.5781C1.91548 31.6772 1.59789 31.6918 1.29419 31.6204C0.990487 31.549 0.712702 31.3944 0.492015 31.1738C0.271328 30.9533 0.116476 30.6756 0.0448412 30.372C-0.0267934 30.0683 -0.0123746 29.7507 0.0864794 29.4548L2.24298 22.9885C2.65148 21.763 2.85573 21.1502 3.12965 20.5739C3.45581 19.892 3.85112 19.2524 4.31556 18.6549C4.70823 18.1514 5.16581 17.6954 6.0794 16.7818L19.6961 3.16675Z' fill='black'/><path opacity='0.5' d='M29.8452 10.629C30.4233 10.0508 30.8819 9.36434 31.1948 8.60887C31.5076 7.8534 31.6686 7.0437 31.6685 6.22602C31.6684 5.40833 31.5073 4.59867 31.1943 3.84325C30.8814 3.08784 30.4226 2.40147 29.8444 1.82333C29.2662 1.24519 28.5797 0.786603 27.8242 0.473756C27.0688 0.160909 26.2591 -7.34879e-05 25.4414 2.51661e-08C23.79 0.000148491 22.2063 0.656303 21.0387 1.82412L19.6343 3.22853L19.6944 3.40428C20.3868 5.38483 21.5199 7.18226 23.0084 8.66095C24.531 10.1931 26.3908 11.348 28.4392 12.0335L29.8452 10.629Z' fill='%23A85197'/></svg>") 0 31, auto;
+}
+
+/* Tùy chỉnh thanh cuộn cho Chrome, Safari và Edge */
+.progress-container::-webkit-scrollbar {
+    width: 3px;
+}
+
+.progress-container::-webkit-scrollbar-track {
+    background: #f4f4f4;
+   
+}
+
+.progress-container::-webkit-scrollbar-thumb {
+    background: #A85197;
+   
+}
+
+
+.materials-checklist h3 {
+    font-family: 'OCR A Std';
+}
+
+.top-right-decoration {
+    position: absolute;
+    top: 0;             /* Sát mép trên */
+             /* Sát mép phải */
+    
+    /* Điều chỉnh kích thước dựa theo hình mẫu của bạn */
+    width: 200px;       /* Bạn có thể tăng giảm con số này cho vừa mắt */
+    height: auto;
+    
+    /* z-index thấp để hình nằm dưới các nút bấm nhưng trên nền */
+    z-index: -1;
+    right: -1px;
+}
+
+.subtitle-container {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    
+    /* Tùy chỉnh giao diện chữ giống phong cách note/hiện đại của bạn */
+    font-family: 'OCR A Std', monospace;
+    font-size: 13px;
+    color: #A85197; /* Màu tím chủ đạo */
+    padding: 5px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Class này sẽ được JS thêm vào khi thỏa mãn điều kiện thời gian */
+.subtitle-container.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 1. Định dạng khối chữ nhật màu trắng (Cố định chiều rộng như hình) */
+.transcript-btn {
+    width: 100%;               /* Hoặc chiều rộng cố định hiện tại của bạn, ví dụ: 500px; */
+    min-height: 40px;          /* Chiều cao tối thiểu khi chỉ có chữ TRANSCRIPT */
+    height: auto;              /* QUAN TRỌNG: Cho phép nút tự giãn dài xuống theo nội dung text */
+    
+    background-color: #ededed; /* Màu nền xám/trắng như trong hình của bạn */
+    border: 1px solid #7a7a7a;  /* Viền của hộp chữ nhật */
+    border-radius: 4px;        /* Bo góc nhẹ như hình */
+    padding: 10px 15px;
+    
+    font-family: 'OCR A Std', monospace;
+    font-size: 13px;
+    color: #000000;            /* Màu chữ TRANSCRIPT */
+    cursor: pointer;
+    gap: 1px;                  /* Thu hẹp khoảng cách giữa chữ TRANSCRIPT và hộp phụ đề (để từ 0px đến 4px tùy ý bạn) */
+    line-height: 1.2;          /* Ép sát khoảng trống dòng của chữ TRANSCRIPT lại */
+
+    /* Sắp xếp chữ TRANSCRIPT ở trên, phụ đề ở dưới */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease; /* Hiệu ứng giãn chiều cao mượt mà */
+}
+
+/* 2. Hộp phụ đề nằm bên trong nút */
+.subtitle-container {
+    /* Khi chưa play: Sử dụng bộ 3 này để ẩn chữ nhưng KHÔNG ẩn khối (giúp nút thu nhỏ lại) */
+    display: none;             
+    opacity: 0;
+    
+    font-size: 13px;
+    color: #000000;            /* Màu chữ phụ đề (ví dụ màu tím cho đồng bộ) */
+    font-weight: normal;
+    text-transform: none;      /* Giữ nguyên chữ thường */
+    text-align: center;
+    width: 100%;               /* Chiếm trọn chiều ngang của hộp trắng */
+    line-height: 1.2;
+    transition: opacity 0.3s ease;
+}
+
+/* 3. Khi video chạy đến đoạn code (0s - 12s) và đang PLAY */
+.subtitle-container.show {
+    display: block;            /* Kích hoạt lại khối để đẩy chiều cao nút rộng ra */
+    opacity: 1;                /* Hiện chữ lên mượt mà */
+}
+/* Container bọc thanh timeline */
+.timeline-container {
+    position: relative;
+    width: 90%;
+    padding: 10px 0; /* Tạo vùng đệm mượt mà khi di chuột */
+}
+
+/* Mặc định ẩn hộp xem trước */
+.preview-box {
+    position: absolute;
+    bottom: 35px; /* Đẩy hộp nằm trên thanh timeline */
+    left: 0;
+    transform: translateX(-50%); /* Căn giữa hộp theo con trỏ chuột */
+    background-color: rgb(0, 0, 0);
+    color: #F4F4F4;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: 'OCR A Std', monospace;
+    pointer-events: none; /* Tránh việc hộp cản trở chuột tương tác trực tiếp với slider */
+    display: none; /* Mặc định ẩn */
+    z-index: 100;
+
+}
+
+/* Thêm mũi tên nhỏ dưới hộp preview cho đẹp */
+.preview-box::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px 5px 0;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.85) transparent;
+}
+
+/* Khi hover vào container thì hiện hộp preview lên */
+.timeline-container:hover .preview-box {
+    display: block;
+}
+
+/* Container bọc timeline và hộp preview */
+.timeline-container {
+    position: relative;
+    width: 100%;       /* QUAN TRỌNG: Ép hộp chứa giãn rộng hết cỡ theo hàng */
+    padding: 10px 0;   
+    display: block;    /* Đảm bảo khối độc lập không bị bóp nghẹt */
+}
+
+/* Đảm bảo thanh trượt bên trong cũng chiếm trọn chiều ngang của container */
+#seekSlider {
+    width: 100%;
+    display: block;
+    align-items: center;
+    cursor: pointer;
+    margin: 0;
+    accent-color: #f4da7c; 
+    
+    
+}
+.subtitle-container {
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out; /* Khi thêm class .show, nguyên câu nói sẽ hiện lên mượt mà trong 0.25 giây */
+}
+.subtitle-container.show {
+    opacity: 1;
+}
+
+.transcript-btn {
+    /* --- ĐỊNH VỊ BAN ĐẦU: NẰM DƯỚI THANH CONTROL TỰ NHIÊN --- */
+    position: relative;        
+    margin: 15px auto 0 auto;  /* Giữ nguyên để tự động căn giữa dưới thanh tím */
+    z-index: 100;             
+    cursor: move;              
+
+    /* --- CẬP NHẬT CHIỀU RỘNG NHỎ GỌN NHƯ BAN ĐẦU --- */
+    width: 650px;              /* Đổi thành chiều rộng cố định của bạn (ví dụ: 600px, 650px...) */
+    max-width: 90%;            /* Lớp bảo vệ giúp hộp không bị tràn nếu xem trên màn hình nhỏ */
+    
+    /* Các thuộc tính giao diện khác giữ nguyên */
+    height: auto;
+    background-color: #ededed;
+    border: 1px solid #000000;
+  
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+  
+}
+
+.overlay-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Làm mờ nền 60% */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.overlay-container.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.overlay-box {
+    background-color: #ededed;
+    border: 1px solid #7a7a7a;
+    border-radius: 6px;
+    padding: 30px;
+    width: 460px;
+    max-width: 85%;
+    position: relative;
+    text-align: center;
+    font-family: 'OCR A Std', monospace;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.overlay-container.active .overlay-box {
+    transform: scale(1);
+}
+
+.overlay-box h2 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #000000;
+    font-weight: bold;
+}
+
+.overlay-box p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #222222;
+    text-align: justify;
+}
+
+.close-btn {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #666666;
+}
+
+.close-btn:hover {
+    color: #000000;
 }
