@@ -1010,14 +1010,21 @@ html, body {
    7. HỆ THỐNG PHÂN CHIA RESPONSIVE CHO MÀN HÌNH NHỎ
    ================================================================= */
 @media (max-width: 1024px) {
+   /* Đảm bảo container bọc video không bị ghim chết một chỗ */
     .video-container {
         position: relative;
         top: 0;
         left: 0;
         transform: none;
+        margin: 15px auto 20px auto; /* Đã xích lên ở bước trước */
         width: 90%; 
-        margin: 20px auto; /* Căn giữa bằng margin */
     }
+
+    /* --- ĐÃ THÊM: Đẩy video xích xuống so với SVG nền --- */
+    .tutorial-video {
+        top: 22px; /* Chỉnh con số này lớn hơn nếu bạn muốn video tụt xuống thấp hơn nữa */
+    }
+}
 
     .control-row-bottom {
         gap: 100px;
@@ -1028,7 +1035,7 @@ html, body {
         height: auto;
         display: block;
     }
-}
+
 
 @media (max-width: 768px) {
     .control-row-bottom {
@@ -1057,105 +1064,99 @@ html, body {
     }
 }
 
-/* --- Điện thoại di động (Dưới 768px) --- */
+//* =================================================================
+   8. RESPONSIVE CHUẨN UI CHO IPHONE 15 & CÁC THIẾT BỊ DI ĐỘNG (< 768PX)
+   ================================================================= */
 @media (max-width: 768px) {
     .custom-controls {
-        padding: 15px 10px; /* Ép không gian cực kỳ nhỏ gọn */
-        gap: 8px;           /* Thu hẹp khoảng cách giữa thanh Timeline và hàng nút */
+        width: 88%;            /* Giữ nguyên độ rộng ngắn bằng viền video */
+        margin: 32px auto 0 auto; /* Đẩy dịch xuống 32px thoáng đãng như bạn chỉnh */
+        padding: 15px 12px; 
+        gap: 12px;             /* Tăng khoảng cách giữa thanh Timeline và cụm nút */
     }
 
-    /* Ép tất cả các cụm (Nút bấm, Volume, Speed) xếp chung trên một hàng gọn gàng */
+    /* --- GIẢI PHÁP SỬA LỖI ÉP NÚT: Tách làm 2 hàng để các nút có không gian thở --- */
     .control-row-bottom {
-        flex-direction: row; 
-        justify-content: space-between;
-        gap: 5px;
+        display: flex;
+        flex-direction: column; /* Bẻ đôi: Hàng trên chứa nút Play, hàng dưới chứa Volume/Speed */
+        align-items: center;
+        gap: 12px;              /* Khoảng cách đứng giữa hàng trên và hàng dưới */
+        width: 100%;
         margin-top: 0;
     }
 
-    /* Thu nhỏ cụm nút Play/Next/Prev nằm sát lại nhau */
+    /* --- HÀNG TRÊN: Cụm nút Play/Next/Prev thoải mái không lo bị ép --- */
     .left-btns {
-        gap: 4px; 
+        width: 100%;
+        justify-content: center; /* Căn giữa cụm nút chính */
+        gap: 10px;               /* Tăng khoảng cách giữa các nút cho dễ chạm */
     }
 
-    /* Giảm size chữ và thu hẹp vùng đệm của nút UI cho thật nhỏ gọn */
+    /* Phục hồi lại kích thước nút UI dẹt tròn nhìn cho sang và cân đối */
     .ui-btn {
-        height: 32px;       /* Hạ chiều cao từ 40px xuống 32px */
-        padding: 0 10px;    /* Thu hẹp padding ngang */
-        font-size: 11px;    /* Hạ size chữ nhỏ xuống */
-        gap: 5px;
-    }
-    
-    .ui-btn svg {
-        width: 12px;        /* Thu nhỏ icon SVG bên trong nút */
-        height: 12px;
+        height: 38px;            /* Tăng nhẹ chiều cao lên 38px (gần bằng 40px gốc) */
+        padding: 0 16px;         /* Cho nút có độ dài dẹt tự nhiên */
+        font-size: 13px;         /* Chữ to rõ ràng, không bị lí nhí */
+        gap: 6px;
     }
 
-    /* Giữ cụm Volume & Speed siêu nhỏ trên cùng một hàng hàng ngang */
+    .ui-btn svg {
+        width: 14px;             /* Icon to rõ hơn */
+        height: 14px;
+    }
+
+    /* --- HÀNG DƯỚI: Nơi chứa bộ đôi Volume và Speed nằm song song --- */
+    /* Chúng ta bọc hoặc ép hai thằng này tự động chia đôi không gian hàng dưới */
     .volume-wrapper,
     .speed-wrapper {
-        height: 32px;       /* Đồng bộ chiều cao 32px bằng nút bấm */
+        height: 36px;            /* Chiều cao vừa vặn */
         background: #000;
+        flex: 1;                 /* Tự động chia đều 50/50 bề ngang hàng dưới */
+        max-width: 140px;        /* Giới hạn độ rộng tối đa để không bị phình to quá */
+        justify-content: center;
     }
 
-    /* Trên điện thoại, cố định thanh trượt hiển thị ngắn và thanh thoát */
+    /* Cho thanh trượt dài ra một chút để dễ dùng ngón tay vuốt trên iPhone 15 */
     .volume-control,
     .speed-control {
-        width: 45px !important; /* Thu ngắn độ dài thanh trượt để không bị tràn */
+        width: 60px !important;  /* Tăng từ 45px lên 60px cho dễ tương tác */
         opacity: 1 !important;
-        margin-left: 3px;
+        margin-left: 5px;
     }
 
     .speed-wrapper:hover .speed-control {
-        width: 45px;
+        width: 60px;
     }
 
     #volumeSlider,
     #speedSlider {
         width: 100%;
-        height: 2px;        /* Làm thanh trượt mảnh mai hơn */
+        height: 3px;             /* Độ dày thanh vừa phải */
     }
 
-    /* Thu nhỏ riêng nút Volume và Speed trong wrapper */
     #volumeBtn,
     #playspeedBtn {
-        min-width: 30px !important;
-        padding: 0 5px !important;
+        min-width: 35px !important;
+        padding: 0 6px !important;
     }
 }
 
-/* --- Điện thoại siêu nhỏ (Dưới 400px) --- */
-@media (max-width: 400px) {
-    .custom-controls {
-        padding: 10px 5px;
-    }
-    
-    /* Ẩn bớt text chữ số của tốc độ để giải phóng không gian cho màn hình quá bé */
-    .speed-control span {
-        display: none; 
+/* --- Tối ưu thêm cho các dòng điện thoại màn hình cực nhỏ (Dưới 360px) --- */
+@media (max-width: 360px) {
+    .ui-btn {
+        padding: 0 12px;
+        font-size: 12px;
+        height: 35px;
     }
     
     .volume-control,
     .speed-control {
-        width: 35px !important; /* Ép thanh trượt ngắn thêm nữa */
-    }
-
-    .ui-btn {
-        font-size: 10px;
-        padding: 0 6px;
+        width: 45px !important;  /* Điện thoại quá bé thì thu ngắn slider lại một chút */
     }
 }
-@media (max-width: 768px) {
-    .custom-controls {
-        padding: 15px 10px; 
-        gap: 8px;
-        width: 88%;            
-        
-        /* --- BỔ SUNG DÒNG NÀY --- */
-        margin-top: 32px; /* Đẩy thanh điều khiển dịch xuống 12px riêng trên thiết bị di động */
-    }
     
     /* Các dòng code flex-direction, left-btns... bên dưới giữ nguyên */
-}
+
 
 @media (max-width: 1024px) {
     /* --- KÍCH HOẠT CUỘN DỌC TOÀN TRANG CHO MOBILE / TABLET --- */
