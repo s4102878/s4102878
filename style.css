@@ -1198,3 +1198,23 @@ html, body {
         display: none;
     }
 }
+.top-right-decoration img,
+.top-right-decoration svg {
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+}
+
+/* --- 2. Áp dụng các mốc thu nhỏ với từ khóa !important để chặn đứng ghi đè --- */
+@media (max-width: 1024px) {
+    .top-right-decoration {
+        width: 130px !important; /* Dùng !important để bẻ gãy mọi thuộc tính gốc */
+    }
+}
+
+@media (max-width: 768px) {
+    .top-right-decoration {
+        width: 105px !important;  /* iPhone 15 và điện thoại dọc sẽ ăn theo mốc này */
+        /* Làm mờ bớt để không tranh chấp với chữ nghĩa */
+    }
+}
