@@ -10,6 +10,9 @@
   font-style: normal;
 }
 
+/* =================================================================
+   1. CONFIG GỐC TOÀN TRANG & CHỐNG CUỘN
+   ================================================================= */
 html, body {
     margin: 0;
     padding: 0;
@@ -21,10 +24,13 @@ html, body {
     font-weight: 200;
 }
 
-/* Container bao phủ toàn màn hình */
+
+/* =================================================================
+   2. LAYOUT TRANG LANDING (INDEX.HTML)
+   ================================================================= */
 .landing-container {
     position: relative;
-    width: 100%; /* Sử dụng 100% thay vì 100vw để tránh lỗi thanh cuộn ngang trên một số trình duyệt */
+    width: 100%; 
     min-height: 100vh; 
     min-height: 100dvh; /* Đơn vị mới giúp khớp chuẩn với màn hình điện thoại */
     display: flex;
@@ -36,82 +42,18 @@ html, body {
     box-sizing: border-box;
 }
 
-
-/* Cho điện thoại (Mobile) */
 @media (max-width: 768px) {
     .landing-container {
-        /* Nếu có ảnh nền, bạn có thể chỉnh lại vị trí trung tâm */
         background-position: center; 
         padding: 15px;
     }
-    
     .landing-container h1 {
         font-size: 1.8rem; 
         text-align: center;
     }
 }
 
-/* Style chung cho các hộp chứa chong chóng */
-.windmill {
-    position: absolute;
-    /* Sử dụng clamp để kích thước linh hoạt: 
-       Min là 120px, lý tưởng là 18vw, Max là 280px */
-    width: clamp(120px, 18vw, 280px); 
-    height: auto;
-    z-index: 1; /* Đảm bảo nằm dưới box chính nếu cần */
-}
-
-/* Đảm bảo hình SVG bên trong luôn vừa khít hộp */
-.windmill svg {
-    width: 100%;
-    height: 100%;
-}
-
-/* --- VỊ TRÍ CHI TIẾT THEO HÌNH NOTE --- */
-
-/* Asset 1: Góc trên bên trái */
-.asset1 {
-    top: 2%;
-    left: 5%;
-}
-
-/* Asset 2: Góc trên bên phải */
-.asset2 {
-    top: 2%;
-    right: 5%;
-}
-
-/* Asset 3: Góc dưới bên phải */
-.asset3 {
-    bottom: 5%;
-    right: 5%;
-}
-
-/* Asset 4: Góc dưới bên trái */
-.asset4 {
-    bottom: 5%;
-    left: 8%;
-}
-/* --- CHO TABLET (Dưới 1024px) --- */
-@media (max-width: 1024px) {
-    .asset1 { top: 5%; left: 2%; }
-    .asset2 { top: 5%; right: 2%; }
-    .asset3 { bottom: 8%; right: 2%; }
-    .asset4 { bottom: 8%; left: 2%; }
-}
-
-@media (max-width: 768px) {
-    .windmill {
-        /* Cho chong chóng nhỏ lại để không lấn át cái box ở giữa */
-        width: clamp(70px, 20vw, 120px); 
-    }
-
-    /* Đẩy vào trong một chút (ví dụ 5% thay vì âm hoặc 0%) */
-    .asset1 { top: 5%; left: 5%; }
-    .asset2 { top: 5%; right: 5%; }
-    .asset3 { bottom: 8%; right: 5%; }
-    .asset4 { bottom: 8%; left: 5%; }
-}
+/* Hộp thông tin trung tâm */
 .center-box {
     position: absolute;
     top: 50%;
@@ -119,45 +61,27 @@ html, body {
     transform: translate(-50%, -50%);
     background-color: #f5f5f5;
     text-align: center;
-    
-    /* Responsive thông minh */
     width: 100%;
     max-width: 430px;
-    
-    /* Giới hạn chiều cao để không bị tràn trên màn hình nhỏ/ngang */
     max-height: 90vh; 
     overflow-y: auto; /* Tự động thêm thanh cuộn nếu nội dung quá dài */
-
     padding: 40px 30px;
     border-radius: 40px;
     box-sizing: border-box;
-   
+    z-index: 20; /* Đảm bảo nằm trên dải màu và chong chóng */
 }
 
-/* --- Media Queries cho điện thoại (dưới 600px) --- */
-@media (max-width: 600px) {
-    .center-box {
-              /* Cho box rộng thêm một chút để tận dụng không gian */
-        padding: 30px 20px;   /* Giảm bớt padding để nội dung bên trong thoải mái hơn */
-        border-radius: 30px;  /* Bo góc nhỏ lại một chút cho đỡ thô trên màn hình bé */
-    }
-}
-
-
-/* Chữ bên trong box */
 .box-text {
     margin-bottom: 30px;
     color: #333;
 }
 
-/* Group chứa 2 nút bấm */
 .button-group {
     display: flex;
     justify-content: center;
     gap: 30px; /* Khoảng cách giữa 2 nút */
 }
 
-/* Style cho 2 nút màu đen */
 .btn-black {
     display: inline-flex;
     align-items: center;
@@ -175,11 +99,66 @@ html, body {
     transition: all 0.3s ease; /* Hiệu ứng mượt khi di chuột vào */
 }
 
-/* Hiệu ứng khi di chuột vào nút (Hover) */
 .btn-black:hover {
     background-color: #444;
     transform: scale(1.05); /* Nút hơi to lên một chút */
 }
+
+/* Hệ thống chong chóng trang trí 4 góc trang Landing */
+.windmill {
+    position: absolute;
+    width: clamp(120px, 18vw, 280px); 
+    height: auto;
+    z-index: 10; 
+    cursor: pointer;
+    transform-origin: bottom center; /* Xác định điểm gốc để lắc/thu nhỏ */
+    animation: swing-windmill 3s ease-in-out infinite alternate;
+    transition: transform 0.4s ease-out; /* Mượt khi thu nhỏ/phóng to */
+}
+
+.windmill svg {
+    width: 100%;
+    height: 100%;
+    transition: transform 1s ease-in-out; /* Giúp cánh quay về vị trí 0 độ mượt mà khi bỏ chuột ra */
+}
+
+/* Hiệu ứng tương tác với chong chóng */
+.windmill:hover {
+    transform: scale(0.5) translateY(10px); /* Thu nhỏ và dịch xuống một chút để tạo hiệu ứng "bị gió thổi mạnh" */
+}
+
+.windmill:hover svg {
+    animation: spin-fast 1s linear infinite;
+}
+
+.windmill svg {
+    transform: rotate(0deg);
+}
+
+/* Tọa độ chi tiết 4 góc */
+.asset1 { top: 2%; left: 5%; }
+.asset2 { top: 2%; right: 5%; }
+.asset3 { bottom: 5%; right: 5%; }
+.asset4 { bottom: 5%; left: 8%; }
+
+@media (max-width: 1024px) {
+    .asset1 { top: 5%; left: 2%; }
+    .asset2 { top: 5%; right: 2%; }
+    .asset3 { bottom: 8%; right: 2%; }
+    .asset4 { bottom: 8%; left: 2%; }
+}
+
+@media (max-width: 768px) {
+    .windmill {
+        width: clamp(70px, 20vw, 120px); /* Cho chong chóng nhỏ lại trên mobile */
+    }
+    .asset1 { top: 5%; left: 5%; }
+    .asset2 { top: 5%; right: 5%; }
+    .asset3 { bottom: 8%; right: 5%; }
+    .asset4 { bottom: 8%; left: 5%; }
+}
+
+/* Dải lụa màu bay trang trí trang Landing */
 .background-trail {
     position: absolute;
     top: 50%;
@@ -189,179 +168,14 @@ html, body {
     height: auto;
     z-index: 1;
     pointer-events: none;
-    
-    /* Áp dụng đồng thời 2 hiệu ứng: Trôi nổi và Nhấp nháy */
     animation: floatingTrail 6s ease-in-out infinite;
-    filter: blur(0px); /* Bắt đầu với độ nét chuẩn */
-}
-
-/* Hiệu ứng trôi nổi lên xuống nhẹ nhàng */
-@keyframes floatingTrail {
-    0%, 100% {
-        transform: translate(-50%, -50%) translateY(0px);
-    }
-    50% {
-        transform: translate(-50%, -50%) translateY(-20px); /* Bay lên 20px */
-    }
-}
-
-/* Đảm bảo chong chóng và box ở trên dải màu */
-.windmill { z-index: 10; }
-.center-box { z-index: 20; }
-
-/* 1. Định nghĩa hiệu ứng lắc (Swing) */
-@keyframes swing-windmill {
-    0% {
-        transform: rotate(-5deg); /* Nghiêng sang trái 5 độ */
-    }
-    50% {
-        transform: rotate(5deg);  /* Nghiêng sang phải 5 độ */
-    }
-    100% {
-        transform: rotate(-5deg); /* Quay về bên trái */
-    }
-}
-
-/* 2. Áp dụng hiệu ứng vào các Asset chong chóng */
-.windmill {
-    /* Tên hiệu ứng | Thời gian 1 chu kỳ | Kiểu chạy mượt | Chạy vô tận | Chạy đi chạy lại */
-    animation: swing-windmill 3s ease-in-out infinite alternate;
-    
-    /* Xác định điểm gốc để lắc là ở cuối cái cán (stick) */
-    transform-origin: bottom center; 
-}
-.windmill {
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* 1. Hiệu ứng xoay tròn (giữ nguyên) */
-@keyframes spin-fast {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-/* 1. Cấu trúc tổng quát cho Windmill */
-.windmill {
-    /* Giữ nguyên các thuộc tính vị trí cũ */
-    transition: transform 0.4s ease-out; /* Mượt khi thu nhỏ/phóng to */
-    cursor: pointer;
-    transform-origin: bottom center;
-}
-
-/* 2. Cấu trúc cho SVG (Cánh chong chóng) */
-.windmill svg {
-    /* QUAN TRỌNG: Giúp cánh quay về vị trí 0 độ mượt mà khi bỏ chuột ra */
-    transition: transform 1s ease-in-out; 
-}
-
-/* --- KHI HOVER --- */
-
-/* Cả cái cây thu nhỏ lại */
-.windmill:hover {
-    transform: scale(0.5) translateY(10px); /* Thu nhỏ và dịch xuống một chút để tạo hiệu ứng "bị gió thổi mạnh" */
-}
-
-/* Cánh xoay tròn liên tục */
-.windmill:hover svg {
-    animation: spin-fast 1s linear infinite;
-}
-
-/* --- KHI RỜI CHUỘT (Cải thiện độ mượt) --- */
-
-/* Khi không còn hover, đảm bảo SVG quay về trạng thái tĩnh êm ái */
-.windmill svg {
-    transform: rotate(0deg);
-}
-
-/* Container chính căn giữa toàn màn hình */
-.main-container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    /* Chia đều không gian để 3 khối luôn nằm trên 1 hàng */
-    justify-content: center; 
-    align-items: center;
-    background-color: #E6E5E5;
-    gap: 2vw; /* Khoảng cách giữa các khối cũng co giãn theo màn hình */
-    padding: 0 20px;
-    box-sizing: border-box;
-    overflow: hidden;
-
-}
-/* Container bao quanh để làm mốc căn giữa */
-.visual-center-wrapper {
-    position:relative;
-    display: flex;
-    /* Responsive ở đây */
-    width: 90%;            /* Chiếm 90% chiều rộng màn hình nhỏ */
-    max-width: 480px;      /* Nhưng không bao giờ rộng quá 480px trên màn hình lớn */
-    aspect-ratio: 1 / 1;   /* Giữ tỉ lệ khung hình vuông (thay cho height cố định) */
-    justify-content: center;
-    align-items: center;
-}
-
-/* Các lớp layer chung để chồng lên nhau */
-.visual-layer {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Asset 7: Vòng tròn vàng to nằm dưới cùng */
-.asset7 {
-    width: 80%;  /* Chiếm toàn bộ 600px của wrapper */
-    z-index: 1;   /* Lớp thấp */
-}
-
-.asset7 svg {
-    width: 100%;
-    height: auto;
-}
-
-/* Asset 6: Chong chóng tím nằm đè lên trên */
-.asset6 {
-    width: 65%;   /* Thu nhỏ lại để nằm vừa vào khoảng trống trắng của Asset 7 */
-    z-index: 2;   /* Lớp cao hơn để đè lên */
-    pointer-events: none; /* Giúp bạn vẫn có thể click xuyên qua chong chóng nếu cần */
-}
-
-.asset6 img {
-    width: 100%;
-    height: auto;
-    /* Nếu hình ảnh PNG bị lệch tâm nhẹ, bạn dùng dòng dưới để tinh chỉnh */
-    /* transform: translate(0px, -5px); */
-}
-
-/* Tạo hiệu ứng xoay tròn 360 độ */
-@keyframes spin-slow {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-.asset7 {
-    width: 80%;
-    z-index: 1;
-    
-    /* Áp dụng hiệu ứng xoay */
-    /* Tên | Thời gian (20s là chậm vừa phải) | Kiểu chạy đều | Vô tận */
-    animation: spin-slow 20s linear infinite;
-    
-    /* Đảm bảo xoay quanh tâm */
-    transform-origin: center; 
-}
-
-/* Khi hover vào wrapper hoặc chính asset7 thì dừng xoay */
-.visual-center-wrapper:hover .asset7{
-    animation-play-state: paused; /* Lệnh tạm dừng animation */
-    cursor: default;
+    filter: blur(0px);
 }
 
 
+/* =================================================================
+   3. LAYOUT TRANG HOME CHÍNH (HOME.HTML / TUTORIAL.HTML)
+   ================================================================= */
 .home-page {
     width: 100vw;
     height: 100vh;
@@ -369,9 +183,9 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
 .back-btn {
     position: fixed;
-    /* Đẩy xuống thấp hơn để thoáng hơn: tối thiểu 30px, tối đa 50px tùy màn hình */
     top: calc(env(safe-area-inset-top) + clamp(30px, 5vh, 50px));
     left: clamp(20px, 4vw, 40px);
     display: flex;
@@ -393,10 +207,9 @@ html, body {
 .back-btn:hover {
     opacity: 0.6;
 }
+
 @media (max-width: 768px) {
     .back-btn {
-        /* Trên mobile, 30px-40px là khoảng cách "vàng" để không chạm tai thỏ 
-           nhưng cũng không chiếm quá nhiều diện tích nội dung */
         top: calc(env(safe-area-inset-top) + 30px);
         left: 20px;
         font-size: 14px;
@@ -404,170 +217,39 @@ html, body {
 }
 
 .back-btn img {
-  width: 20px;
-  height: auto;
-}
-
-/* Khung chứa bộ đôi Asset 8 & 9 */
-.visual-left-wrapper {
-    position: relative;
-    top: 50%; /* Giữ ở giữa theo chiều dọc */
-    left: 25px; /* Đẩy cách lề trái 50px (tùy chỉnh số này) */
-    transform: translateY(-50%); /* Chỉ căn giữa dọc, không căn giữa ngang */
-    width: 300px; /* Độ rộng của vòng tròn to nhất (Asset 8) */
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 0 1
-}
-
-/* Các lớp layer để xếp chồng */
-.asset-layer {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Asset 8: Vòng tròn nâu nằm dưới */
-.asset8 {
-    width: 80%;
-    z-index: 1;
-}
-
-/* Asset 9: Vòng tròn chữ & chong chóng nằm trên */
-.asset9 {
-    width: 95%; /* Nhỏ hơn một chút để lọt lòng Asset 8 */
-    z-index: 2;
-    animation: spin-slow 20s linear infinite;
-    
-    /* Đảm bảo xoay quanh tâm */
-    transform-origin: center; 
-}
-
-/* Đảm bảo SVG hiển thị đúng */
-.asset-layer svg {
-    width: 100%;
-    height: auto;
-}
-/* Thiết lập trạng thái ban đầu để chuyển động mượt mà */
-.visual-left-wrapper {
-    transition: transform 0.3s ease, filter 0.3s ease;
-    cursor: pointer; /* Biến con trỏ thành hình bàn tay để biết là click được */
-}
-
-/* Hiệu ứng khi di chuột (Hover) vào cụm bên trái */
-.visual-left-wrapper:hover{
-    /* 1. Phóng to nhẹ 1.05 lần */
-    /* Lưu ý: Nếu bạn đang dùng translateY(-50%) để căn giữa dọc, 
-       phải giữ nguyên nó trong lệnh transform này */
-    transform: translateY(-50%) scale(1.05); 
-    /* 2. Làm sáng lên một chút */
-    filter: brightness(1.1) drop-shadow(0 0 15px rgba(230, 205, 77, 0.4));
-    
-}
-.visual-left-wrapper:hover .asset9{
-    animation-play-state: paused; /* Tạm dừng hiệu ứng xoay khi hover */
-}
-.visual-right-wrapper:hover{
-    transform: translateY(-50%) scale(1.05); 
-    /* 2. Làm sáng lên một chút */
-    filter: brightness(1.1) drop-shadow(0 0 15px rgba(175, 131, 50, 0.513));
-}
-.visual-right-wrapper:hover .asset11{
-    animation-play-state: paused; /* Tạm dừng hiệu ứng xoay khi hover */
-}
-
-/* Hiệu ứng khi nhấn chuột xuống (Active) */
-.visual-left-wrapper:active, .visual-right-wrapper:active {
-    transform: translateY(-50%) scale(0.98); /* Nhấn lún xuống tạo cảm giác như nút bấm thật */
-}
-
-/* Container chính bao ngoài cụm bên phải */
-.visual-right-wrapper {
-    flex-shrink: 1;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-/* Các lớp layer xếp chồng */
-.asset-layer {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.asset-layer svg {
-    width: 100%;
+    width: 20px;
     height: auto;
 }
 
-/* Asset 11 nằm dưới cùng */
-.asset11 {
-    width: 100%; /* To nhất */
-    z-index: 1;
+/* Khung chứa layout chính của trang Home (chứa 3 wrapper) */
+.main-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center; /* Chia đều không gian để 3 khối luôn nằm trên 1 hàng */
+    align-items: center;
+    background-color: #E6E5E5;
+    gap: 2vw; /* Khoảng cách giữa các khối co giãn theo màn hình */
+    padding: 0 20px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
-/* Asset 10 nằm đè lên trên */
-.asset10 {
-    width: 85%; /* Nhỏ hơn một chút để thấy viền Asset 11 */
-    z-index: 2;
-}
-
-.asset10 {
-    width: 80%;
-    z-index: 1;
-}
-
-/* Asset 9: Vòng tròn chữ & chong chóng nằm trên */
-.asset11 {
-    width: 95%; /* Nhỏ hơn một chút để lọt lòng Asset 8 */
-    z-index: 2;
-    animation: spin-slow 20s linear infinite;
-    
-    /* Đảm bảo xoay quanh tâm */
-    transform-origin: center; 
-}
-
+/* Lớp nền dải lụa màu trang trí số 2 */
 .background-trail2 {
-    position: fixed; /* Hoặc absolute tùy theo bạn có muốn nó cuộn theo trang không */
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -45%); /* Căn giữa màn hình, dịch lên 5% để khớp hình mẫu */
-    
     width: 95vw;  /* Độ rộng chiếm gần hết chiều ngang màn hình */
     height: auto;
-    
-    z-index: -1;   /* Luôn nằm dưới các asset khác */
-    pointer-events: none; /* User có thể click xuyên qua dải màu này để bấm nút */
-    opacity: 0.9;  /* Chỉnh độ mờ nếu cần */
+    pointer-events: none; /* User có thể click xuyên qua dải màu này */
+    opacity: 0.9;  
     z-index: 1;
-    pointer-events: none;
-    
-    /* Áp dụng đồng thời 2 hiệu ứng: Trôi nổi và Nhấp nháy */
-    animation: 
-        floatingTrail 6s ease-in-out infinite,
-        glowingTrail 4s ease-in-out infinite;
-    
-    /* Giúp chuyển động mượt hơn trên màn hình retina */
+    animation: floatingTrail 6s ease-in-out infinite, glowingTrail 4s ease-in-out infinite;
     backface-visibility: hidden;
-    filter: blur(0px); /* Bắt đầu với độ nét chuẩn */
-}
-
-/* Hiệu ứng trôi nổi lên xuống nhẹ nhàng */
-@keyframes floatingTrail {
-    0%, 100% {
-        transform: translate(-50%, -50%) translateY(0px);
-    }
-    50% {
-        transform: translate(-50%, -50%) translateY(-20px); /* Bay lên 20px */
-    }
+    filter: blur(0px);
 }
 
 .background-trail2 svg {
@@ -576,6 +258,63 @@ html, body {
     display: block;
 }
 
+/* Định dạng các lớp Layer kỹ thuật dùng chung */
+.visual-layer, .asset-layer {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.asset-layer svg {
+    width: 100%;
+    height: auto;
+}
+
+/* ----------------------------------
+   CỤM BÊN TRÁI (Asset 8 & 9)
+   ---------------------------------- */
+.visual-left-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 2%; /* Dùng % sát lề để nhường chỗ cho vòng tròn to ra */
+    transform: translateY(-50%); 
+    width: 25vw; 
+    height: 25vw;
+    max-width: 350px; /* Tăng từ 300 lên 350 để to hơn */
+    min-width: 180px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.asset8 {
+    width: 80%;
+    z-index: 1;
+}
+
+.asset9 {
+    width: 95%; /* Nhỏ hơn một chút để lọt lòng Asset 8 */
+    z-index: 2;
+    animation: spin-slow 20s linear infinite;
+    transform-origin: center; 
+}
+
+.visual-left-wrapper:hover {
+    transform: translateY(-50%) scale(1.05); /* Phóng to nhẹ 1.05 lần */
+    filter: brightness(1.1) drop-shadow(0 0 15px rgba(230, 205, 77, 0.4)); /* Làm sáng lên một chút */
+}
+
+.visual-left-wrapper:hover .asset9 {
+    animation-play-state: paused; /* Tạm dừng hiệu ứng xoay khi hover */
+}
+
+/* ----------------------------------
+   CỤM CHÍNH GIỮA (Asset 6 & 7)
+   ---------------------------------- */
 .visual-center-wrapper {
     position: absolute;
     top: 50%;
@@ -589,32 +328,179 @@ html, body {
     justify-content: center;
     align-items: center;
     z-index: 2;
+    aspect-ratio: 1 / 1; /* Giữ tỉ lệ khung hình vuông */
 }
 
-.visual-left-wrapper, 
+.asset7 {
+    width: 80%;
+    z-index: 1;
+    animation: spin-slow 20s linear infinite;
+    transform-origin: center; 
+}
+
+.asset7 svg {
+    width: 100%;
+    height: auto;
+}
+
+.visual-center-wrapper:hover .asset7 {
+    animation-play-state: paused; /* Tạm dừng animation khi hover */
+}
+
+.asset6 {
+    width: 65%;   /* Nằm vừa vào khoảng trống trắng của Asset 7 */
+    z-index: 2;   
+    pointer-events: none; /* Giúp click xuyên qua nếu cần */
+}
+
+.asset6 img {
+    width: 100%;
+    height: auto;
+}
+
+/* ----------------------------------
+   CỤM BÊN PHẢI (Asset 10 & 11)
+   ---------------------------------- */
 .visual-right-wrapper {
     position: absolute;
     top: 50%;
+    right: 2%;
     transform: translateY(-50%);
-    
-    /* Tăng kích thước lên so với code trước */
     width: 25vw; 
     height: 25vw;
-    max-width: 350px; /* Tăng từ 300 lên 350 để to hơn */
-    min-width: 180px; /* Giới hạn để vẫn đọc được chữ */
-    
+    max-width: 350px; 
+    min-width: 180px; 
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+    z-index: 2;
 }
 
-.visual-left-wrapper {
-    left: 2%; /* Dùng % sát lề để nhường chỗ cho vòng tròn to ra */
+.asset10 {
+    width: 78%; /* Nhỏ hơn một chút để thấy viền Asset 11 */
+    z-index: 2;
 }
 
-.visual-right-wrapper {
-    right: 2%;
+.asset11 {
+    width: 95%; /* To nhất nằm dưới cùng */
+    z-index: 1;
+    animation: spin-slow 20s linear infinite;
+    transform-origin: center; 
+}
+
+.visual-right-wrapper:hover {
+    transform: translateY(-50%) scale(1.05); 
+    filter: brightness(1.1) drop-shadow(0 0 15px rgba(175, 131, 50, 0.513)); /* Làm sáng lên một chút */
+}
+
+.visual-right-wrapper:hover .asset11 {
+    animation-play-state: paused; /* Tạm dừng hiệu ứng xoay khi hover */
+}
+
+/* Hiệu ứng click chung cho cả cụm Trái và Phải */
+.visual-left-wrapper:active, .visual-right-wrapper:active {
+    transform: translateY(-50%) scale(0.98); /* Nhấn lún xuống tạo cảm giác vật lý */
+}
+
+
+/* =================================================================
+   4. QUẢN LÝ TẤT CẢ HIỆU ỨNG (ANIMATION KEYFRAMES)
+   ================================================================= */
+/* Hiệu ứng lắc nhẹ chong chóng */
+@keyframes swing-windmill {
+    0% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    100% { transform: rotate(-5deg); }
+}
+
+/* Hiệu ứng quay nhanh khi Hover */
+@keyframes spin-fast {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Hiệu ứng xoay nền chậm */
+@keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Hiệu ứng dải nền bồng bềnh lên xuống */
+@keyframes floatingTrail {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+    50% { transform: translate(-50%, -50%) translateY(-20px); }
+}   
+
+
+/* =================================================================
+   5. RESPONSIVE LAYOUT
+   ================================================================= */
+@media (max-width: 768px) {
+    /* 1. Cho phép trang Home kích hoạt cuộn dọc để chứa đủ 3 khối */
+    .home-page {
+        overflow-y: auto !important;
+    }
+
+    /* 2. CẬP NHẬT TẠI ĐÂY: Thu hẹp khoảng cách giữa 3 khối */
+    .main-container {
+        flex-direction: column;   
+        justify-content: flex-start; 
+        height: auto;             
+        min-height: 100vh;
+        
+        /* --- ĐÃ SỬA --- */
+        gap: 15px;                /* GIẢM TỪ 40px XUỐNG 15px: Giúp 3 khối sát rạt lại gần nhau */
+        padding: 80px 20px 20px 20px; /* Giảm padding-top xuống 80px để đẩy cả cụm lên cao hơn một chút */
+        
+        overflow-y: visible;
+    }
+
+    /* 3. Đưa 3 khối wrapper về trạng thái xếp hàng tự nhiên */
+    .visual-left-wrapper, 
+    .visual-center-wrapper, 
+    .visual-right-wrapper {
+        position: relative;        
+        top: 0 !important;         
+        left: 0 !important;        
+        right: 0 !important;       
+        transform: none !important; 
+        
+        /* Kích thước giữ nguyên để đảm bảo hiển thị đẹp trên mobile */
+        width: 65vw;               
+        height: 65vw;              
+        max-width: 280px;          
+        min-width: 200px;          
+        margin: 0 auto;            
+    }
+
+    /* 4. Thứ tự xếp chồng */
+    .visual-left-wrapper {
+        order: 1; 
+    }
+
+    .visual-center-wrapper {
+        order: 2; 
+        width: 75vw;  
+        height: 75vw;
+        max-width: 320px;
+    }
+
+    .visual-right-wrapper {
+        order: 3; 
+    }
+
+    /* Hoạt họa hover trên mobile */
+    .visual-left-wrapper:hover,
+    .visual-right-wrapper:hover {
+        transform: scale(1.05) !important; 
+    }
+
+    .visual-left-wrapper:active, 
+    .visual-right-wrapper:active {
+        transform: scale(0.98) !important;
+    }
 }
 
 /* Container bao ngoài của SVG kẻ dòng thẳng */
@@ -645,13 +531,15 @@ html, body {
     stroke-width: 0.5px; /* Độ dày đường kẻ */
 }
 
-/* Container tổng bao quanh cả video và hình nền */
+
+/* =================================================================
+   2. CONTAINER BỌC VIDEO & THANH ĐIỀU KHIỂN (CỤM BÊN TRÁI)
+   ================================================================= */
 .video-container {
     position: absolute;
     top: 50%;
-    left: 20%; /* Đẩy sát lề trái layout (điều chỉnh % này để khớp với hình) */
+    left: 5%; /* Đẩy sát lề trái layout cũ của bạn */
     margin-top: -285px;
- 
     width: 55%; /* Độ rộng tổng thể của cụm bên trái */
     height: auto;
     display: flex;
@@ -659,77 +547,56 @@ html, body {
     justify-content: center;
     align-items: center;
     z-index: 10;
-   
-     /* Số dương sẽ đẩy khối xuống thấp hơn */
 }
 
-
-/* Lớp hình nền (Hình chữ nhật màu tím vàng) */
-
-  .bg-video-wrapper {
+/* Lớp hình nền SVG chữ nhật màu tím vàng */
+.bg-video-wrapper {
     position: absolute;
-    width: 100%; /* Độ rộng vừa phải để bao quanh video */
-    height: 100%; /* Cao hơn một chút để tạo viền */
-    
-    /* CĂN GIỮA HOÀN HẢO */
+    width: 100%; 
+    height: 100%; 
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); 
-    
     z-index: 1;
-    pointer-events: none; /* Rất quan trọng: để không bấm nhầm vào nền thay vì nút */
+    pointer-events: none; /* Không cản trở chuột tương tác */
 }
 
-
 .bg-video-wrapper svg {
-    width: 100%; /* Đảm bảo SVG co giãn theo container */
+    width: 100%; 
     height: auto;
     display: block;
 }
 
-/* Lớp chứa Video (Nằm trên nền) */
+/* Lớp chứa Video (Nằm trên nền SVG) */
 .tutorial-video {
-    top: 34px;
     position: relative;
-    z-index: 2; /* Nằm trên nền tím */
-    /* Điều chỉnh vị trí và kích thước để video nằm vừa trong khung vàng của SVG */
+    top: 34px;
     width: 88%; 
-    /* Dịch lên/xuống tùy thuộc vào hình dáng SVG của bạn */
+    z-index: 2; /* Nằm trên nền tím */
 }
 
 .tutorial-video video {
     width: 100%;
     display: block;
     border-radius: 65px; /* Bo góc để video khớp với đường cong của khung */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Tạo chiều sâu */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
 }
 
-
-    
-    /* Nhớ sửa cả video-container của bạn về position: relative ở mức màn hình này */
-.video-container {
-        position: relative;
-        top: 0;
-        left: 0;
-        transform: none;
-        width: 100%;
-        margin-bottom: 20px;
-    
-}
-
-/* Container bao quanh */
-.video-container {
+/* Decor trang trí hoa văn phụ góc phải */
+.top-right-decoration {
     position: absolute;
-    top: 50%;
-    left: 5%; /* Vị trí bên trái như bạn yêu cầu */
-    width: 55%;
-    z-index: 10;
+    top: 0;             
+    right: -1px;
+    width: 200px;       
+    height: auto;
+    z-index: -1;
 }
 
-
-/* Thanh điều khiển tự chế */
+/* =================================================================
+   3. THANH ĐIỀU KHIỂN TỰ CHẾ (CUSTOM CONTROLS)
+   ================================================================= */
 .custom-controls {
-    /* Màu tím khớp Asset 13 */
+    width: 100%;
     padding: 40px;
     border-radius: 0 0 20px 20px;
     display: flex;
@@ -737,592 +604,50 @@ html, body {
     gap: 10px;
     z-index: 10;
     margin-top: 1px;
-   
 }
 
-/* Tùy chỉnh thanh Timeline (Seek Bar) */
-.seek-bar {
-    width: 100%;
-    cursor: pointer;
-    accent-color: #f4da7c; /* Màu vàng của Asset */
-}
-
-.control-row-bottom {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-top: -10px;
-    gap: 220px; /* Cho Desktop */
-}
+/* --- Hàng phía trên: Timeline (Seek Bar) & Preview --- */
 .control-row-top {
     width: 90%;
-    margin: 0 auto;       /* BỔ SUNG: Ép nguyên cả khối 90% này phải nằm chính giữa khung tím */
-    display: flex;        /* Đảm bảo các phần tử bên trong hoạt động theo dạng flex */
-    justify-content: center; /* Căn giữa các thành phần con */
+    margin: 0 auto;       /* Ép nguyên cả khối 90% này phải nằm chính giữa khung tím */
+    display: flex;        
+    justify-content: center; 
     align-items: center;
 }
 
-/* 2. Đảm bảo container bọc slider tự căn giữa */
 .timeline-container {
     position: relative;
-    width: 100%;          /* Chiếm trọn 100% không gian của khối .control-row-top (tức là 90% tổng thể) */
-    margin: 0 auto;       /* BỔ SUNG: Giữ cho hộp chứa luôn ở trung tâm */
+    width: 100%;          /* Chiếm trọn 100% không gian của khối .control-row-top */
+    margin: 0 auto;       
     padding: 10px 0;   
     display: block;       
 }
 
-/* Cho máy tính bảng hoặc laptop nhỏ */
-@media (max-width: 1024px) {
-    .control-row-bottom {
-        gap: 100px;
-    }
-}
-
-/* Cho điện thoại */
-@media (max-width: 768px) {
-    .control-row-bottom {
-        gap: 10px; /* Giảm mạnh gap để các nút không bị đẩy ra ngoài */
-        justify-content: space-evenly; /* Chia đều không gian còn lại */
-    }
-    
-    /* Nếu nút vẫn to quá, có thể thu nhỏ nút lại */
-    .ui-btn {
-        min-width: 80px; 
-        font-size: 12px;
-    }
-
-    
-}
-.ui-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    
-    /* BỎ chiều rộng cố định */
-    /* min-width: 110px; */ 
-    
-    /* DÙNG padding để tạo khoảng cách 2 bên chữ */
-    /* (Trên/Dưới: 0px, Trái/Phải: 20px) */
-    padding: 0 20px; 
-    
-    /* Cho phép nút tự động lấy chiều rộng theo nội dung */
-    width: auto; 
-    
-    /* Giữ nguyên các thuộc tính khác */
-    height: 40px;
-    background: #000;
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-family: 'OCR A Std', monospace;
-    font-size: 15px;
-    transition: background 0.3s;
-    gap: 10px;
-    
-    /* Ngăn chữ bị xuống dòng khi nút co lại */
-    white-space: nowrap; 
-}
-.ui-btn:hover {
-    background: #222;
-}
-
-.icon-wrapper {
-    display: flex;
-    align-items: center;
-}
-
-/* Style cho các SVG */
-.ui-btn svg {
-    width: 16px;
-    height: 16px;
-}
-.left-btns {
-    display: flex;
-    align-items: center; /* Căn tất cả các con theo trục giữa nằm ngang */
-    gap: 10px;
-}
-
-
-/* Mặc định: hiện Play, ẩn Pause */
-.icon-pause {
-    display: none 
-}
-.icon-play {
-    display: block 
-}
-
-/* Khi video đang chạy (nút có class .playing): ẩn Play, hiện Pause */
-.ui-btn.playing .icon-play {
-    display: none 
-}
-.ui-btn.playing .icon-pause {
-    display: block 
-}
-
-/* Căn chỉnh để không bị lệch như trong ảnh của bạn */
-.icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-/* Media Query: Khi màn hình nhỏ hơn 1024px (hoặc tùy độ rộng bạn muốn) */
-@media (max-width: 1024px) {
-    
-    /* 1. Đưa container tổng về relative để nó không căn giữa màn hình nữa */
-    .video-container {
-        position: relative ;
-        top: 0 ;
-        left: 0 ;
-        transform: none ;
-        width: 90% ; /* Chiếm gần hết chiều rộng */
-        margin: 20px auto ; /* Căn giữa bằng margin */
-    }
-
-
-    /* 3. Đảm bảo Body có thể cuộn được khi nội dung dài ra */
-    body {
-        overflow-y: auto ;
-        height: auto;
-        display: block ;
-    }
-}
-
-.speed-wrapper {
-    display: flex;
-    align-items: center;
-    background: #000;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-    overflow: hidden;
-    height: 40px;
-}
-
-.speed-wrapper:hover {
-    padding-right: 15px;
-}
-
-.speed-control {
-    width: 0;
-    opacity: 0;
-    transition: width 0.3s ease, opacity 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.speed-wrapper:hover .speed-control {
-    width: 120px; /* Độ rộng đủ cho slider và chữ số */
-    opacity: 1;
-    margin-left: 5px;
-}
-
-#speedSlider {
-    width: 70px;
-    cursor: pointer;
-    accent-color: #E6CD4D; /* Màu vàng đồng bộ với progress bar */
-}
-
-#playspeedBtn {
-    min-width: 40px !important;
-    padding: 0 10px !important;
-    background: transparent;
-}
-
-#volumeBtn svg {
-     /* Hoặc kích thước bất kỳ bạn muốn hiển thị */
-    height: auto;  /* Giữ tỷ lệ icon */
+#seekSlider {
+    width: 100%;
     display: block;
-}
-.volume-wrapper {
-    display: flex;
-    align-items: center;
-    background: #000; /* Màu nền đen đồng bộ với button */
-    border-radius: 20px;
-    padding-right: 0;
-    transition: all 0.3s ease;
-    overflow: hidden;
-    height: 40px;
-}
-
-/* Khi hover vào toàn bộ cụm volume */
-.volume-wrapper:hover {
-    padding-right: 15px; /* Tạo khoảng trống cho slider */
-}
-
-.volume-control {
-    width: 0;
-    opacity: 0;
-    transition: width 0.3s ease, opacity 0.2s ease;
-    display: flex;
-    align-items: center;
-}
-
-.volume-wrapper:hover .volume-control {
-    width: 80px; /* Độ dài thanh trượt hiện ra */
-    opacity: 1;
-    margin-left: 5px;
-}
-
-#volumeSlider {
-    width: 100%;
     cursor: pointer;
-    accent-color: #A85197; /* Màu tím theo tone progress bar của bạn */
-    height: 4px;
-}
-
-/* Tùy chỉnh thêm để button volume không bị bo tròn quá mức khi có slider đi kèm */
-#volumeBtn {
-    min-width: 40px !important;
-    padding: 0 10px !important;
-    background: transparent; /* Để lộ nền đen của wrapper */
-}
-
-
-.progress-container {
-    scale: 0.9;
-    position: fixed; /* Cố định bên phải màn hình */
-    right: 70px;
-    overflow-x: hidden;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: url("data:image/svg+xml;utf8,<svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M19.6961 3.16675L19.6343 3.22691L19.6945 3.40425C20.3868 5.3848 21.52 7.18223 23.0084 8.66091C24.531 10.1931 26.3908 11.348 28.4392 12.0334L14.8859 25.5867C13.9707 26.5003 13.5131 26.9579 13.0096 27.3506C12.4151 27.8133 11.7722 28.2104 11.0922 28.5349C10.5159 28.8104 9.90315 29.0147 8.67606 29.4232L2.21131 31.5781C1.91548 31.6772 1.59789 31.6918 1.29419 31.6204C0.990487 31.549 0.712702 31.3944 0.492015 31.1738C0.271328 30.9533 0.116476 30.6756 0.0448412 30.372C-0.0267934 30.0683 -0.0123746 29.7507 0.0864794 29.4548L2.24298 22.9885C2.65148 21.763 2.85573 21.1502 3.12965 20.5739C3.45581 19.892 3.85112 19.2524 4.31556 18.6549C4.70823 18.1514 5.16581 17.6954 6.0794 16.7818L19.6961 3.16675Z' fill='black'/><path opacity='0.5' d='M29.8452 10.629C30.4233 10.0508 30.8819 9.36434 31.1948 8.60887C31.5076 7.8534 31.6686 7.0437 31.6685 6.22602C31.6684 5.40833 31.5073 4.59867 31.1943 3.84325C30.8814 3.08784 30.4226 2.40147 29.8444 1.82333C29.2662 1.24519 28.5797 0.786603 27.8242 0.473756C27.0688 0.160909 26.2591 -7.34879e-05 25.4414 2.51661e-08C23.79 0.000148491 22.2063 0.656303 21.0387 1.82412L19.6343 3.22853L19.6944 3.40428C20.3868 5.38483 21.5199 7.18226 23.0084 8.66095C24.531 10.1931 26.3908 11.348 28.4392 12.0335L29.8452 10.629Z' fill='%23A85197'/></svg>") 0 31, auto !important;
-
-}
-
-.progress-bar {
-    list-style: none;
-    padding: 0;
     margin: 0;
-    letter-spacing: 1px;
+    accent-color: #f4da7c; /* Màu vàng của Asset */
 }
 
-.progress-bar li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px; /* Khoảng cách giữa các bước */
-    position: relative;
-    letter-spacing: -1px;
-}
-
-/* Tạo đường gạch nối dọc */
-.progress-bar li:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    left: 20px; /* Căn giữa theo vòng tròn số (40px/2) */
-    top: 40px;
-    width: 1.5px; /* Độ dày của đường kẻ */
-    height: 50px; /* Chiều cao khớp với margin-bottom */
-    background: #d6b43b;
-}
-
-.progress-bar li:hover .step-text {
-    opacity: 0.6; /* Đổi sang màu vàng khi hover */
-    cursor: url("data:image/svg+xml;utf8,<svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M19.6961 3.16675L19.6343 3.22691L19.6945 3.40425C20.3868 5.3848 21.52 7.18223 23.0084 8.66091C24.531 10.1931 26.3908 11.348 28.4392 12.0334L14.8859 25.5867C13.9707 26.5003 13.5131 26.9579 13.0096 27.3506C12.4151 27.8133 11.7722 28.2104 11.0922 28.5349C10.5159 28.8104 9.90315 29.0147 8.67606 29.4232L2.21131 31.5781C1.91548 31.6772 1.59789 31.6918 1.29419 31.6204C0.990487 31.549 0.712702 31.3944 0.492015 31.1738C0.271328 30.9533 0.116476 30.6756 0.0448412 30.372C-0.0267934 30.0683 -0.0123746 29.7507 0.0864794 29.4548L2.24298 22.9885C2.65148 21.763 2.85573 21.1502 3.12965 20.5739C3.45581 19.892 3.85112 19.2524 4.31556 18.6549C4.70823 18.1514 5.16581 17.6954 6.0794 16.7818L19.6961 3.16675Z' fill='black'/><path opacity='0.5' d='M29.8452 10.629C30.4233 10.0508 30.8819 9.36434 31.1948 8.60887C31.5076 7.8534 31.6686 7.0437 31.6685 6.22602C31.6684 5.40833 31.5073 4.59867 31.1943 3.84325C30.8814 3.08784 30.4226 2.40147 29.8444 1.82333C29.2662 1.24519 28.5797 0.786603 27.8242 0.473756C27.0688 0.160909 26.2591 -7.34879e-05 25.4414 2.51661e-08C23.79 0.000148491 22.2063 0.656303 21.0387 1.82412L19.6343 3.22853L19.6944 3.40428C20.3868 5.38483 21.5199 7.18226 23.0084 8.66095C24.531 10.1931 26.3908 11.348 28.4392 12.0335L29.8452 10.629Z' fill='%23A85197'/></svg>") 0 31, auto !important;
-
-}
-
-.check-item {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid rgba(168, 81, 151, 0.3); /* Dòng kẻ màu tím nhạt */
-    width: 100%;
-}
-
-/* Loại bỏ dòng kẻ ở mục cuối cùng nếu bạn muốn */
-.check-item:last-child {
-    border-bottom: none;
-}
-
-/* Vòng tròn số */
-.step-num {
-    width: 40px;
-    height: 40px;
-    background: radial-gradient(circle, #F4F4F4 0%, #A85197 70%);/* Màu tím gradient */
-    color: #000;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    z-index: 1;
-    cursor: url("data:image/svg+xml;utf8,<svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M19.6961 3.16675L19.6343 3.22691L19.6945 3.40425C20.3868 5.3848 21.52 7.18223 23.0084 8.66091C24.531 10.1931 26.3908 11.348 28.4392 12.0334L14.8859 25.5867C13.9707 26.5003 13.5131 26.9579 13.0096 27.3506C12.4151 27.8133 11.7722 28.2104 11.0922 28.5349C10.5159 28.8104 9.90315 29.0147 8.67606 29.4232L2.21131 31.5781C1.91548 31.6772 1.59789 31.6918 1.29419 31.6204C0.990487 31.549 0.712702 31.3944 0.492015 31.1738C0.271328 30.9533 0.116476 30.6756 0.0448412 30.372C-0.0267934 30.0683 -0.0123746 29.7507 0.0864794 29.4548L2.24298 22.9885C2.65148 21.763 2.85573 21.1502 3.12965 20.5739C3.45581 19.892 3.85112 19.2524 4.31556 18.6549C4.70823 18.1514 5.16581 17.6954 6.0794 16.7818L19.6961 3.16675Z' fill='black'/><path opacity='0.5' d='M29.8452 10.629C30.4233 10.0508 30.8819 9.36434 31.1948 8.60887C31.5076 7.8534 31.6686 7.0437 31.6685 6.22602C31.6684 5.40833 31.5073 4.59867 31.1943 3.84325C30.8814 3.08784 30.4226 2.40147 29.8444 1.82333C29.2662 1.24519 28.5797 0.786603 27.8242 0.473756C27.0688 0.160909 26.2591 -7.34879e-05 25.4414 2.51661e-08C23.79 0.000148491 22.2063 0.656303 21.0387 1.82412L19.6343 3.22853L19.6944 3.40428C20.3868 5.38483 21.5199 7.18226 23.0084 8.66095C24.531 10.1931 26.3908 11.348 28.4392 12.0335L29.8452 10.629Z' fill='%23A85197'/></svg>") 0 31, auto;
-
-}
-
-/* Văn bản bên cạnh */
-.step-text {
-    margin-left: 20px;
-    font-size: 1.2rem;
-
-/* Tránh chữ bị xuống dòng */
-}
-
-/* Màu khi được Click (Active) */
-.progress-bar li.active .step-num {
-    /* 1. Sử dụng !important hoặc ghi đè trực tiếp thuộc tính background */
-    background: radial-gradient(circle, #e2dfdf 0%, #efce12 70%) !important;
-    
-    /* 2. Nếu bạn muốn màu vàng cũng có hiệu ứng tỏa sáng (gradient) cho đẹp: */
-    /* background: radial-gradient(circle, #FFF2A6 0%, #FFD700 100%) !important; */
- 
-}
-
-/* Thêm hiệu ứng cho chữ khi active (nếu muốn) */
-.progress-bar li.active .step-text {
-    color: #A85197;
-    font-weight: bold;
-}
-
-.materials-checklist {
-    margin-bottom: 35px; /* Khoảng cách với progress bar phía dưới */
-    padding-left: 10px;
-    font-family: Kulim Park;
-    cursor: url("data:image/svg+xml;utf8,<svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M19.6961 3.16675L19.6343 3.22691L19.6945 3.40425C20.3868 5.3848 21.52 7.18223 23.0084 8.66091C24.531 10.1931 26.3908 11.348 28.4392 12.0334L14.8859 25.5867C13.9707 26.5003 13.5131 26.9579 13.0096 27.3506C12.4151 27.8133 11.7722 28.2104 11.0922 28.5349C10.5159 28.8104 9.90315 29.0147 8.67606 29.4232L2.21131 31.5781C1.91548 31.6772 1.59789 31.6918 1.29419 31.6204C0.990487 31.549 0.712702 31.3944 0.492015 31.1738C0.271328 30.9533 0.116476 30.6756 0.0448412 30.372C-0.0267934 30.0683 -0.0123746 29.7507 0.0864794 29.4548L2.24298 22.9885C2.65148 21.763 2.85573 21.1502 3.12965 20.5739C3.45581 19.892 3.85112 19.2524 4.31556 18.6549C4.70823 18.1514 5.16581 17.6954 6.0794 16.7818L19.6961 3.16675Z' fill='black'/><path opacity='0.5' d='M29.8452 10.629C30.4233 10.0508 30.8819 9.36434 31.1948 8.60887C31.5076 7.8534 31.6686 7.0437 31.6685 6.22602C31.6684 5.40833 31.5073 4.59867 31.1943 3.84325C30.8814 3.08784 30.4226 2.40147 29.8444 1.82333C29.2662 1.24519 28.5797 0.786603 27.8242 0.473756C27.0688 0.160909 26.2591 -7.34879e-05 25.4414 2.51661e-08C23.79 0.000148491 22.2063 0.656303 21.0387 1.82412L19.6343 3.22853L19.6944 3.40428C20.3868 5.38483 21.5199 7.18226 23.0084 8.66095C24.531 10.1931 26.3908 11.348 28.4392 12.0335L29.8452 10.629Z' fill='%23A85197'/></svg>") 0 31, auto !important;
-   
-    
-}
-
-.materials-checklist h3 {
-
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #9e6798;
-    text-transform: uppercase;
-    letter-spacing: -2px;
-
-}
-.check-item {
-   
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding: 10px 0;
-    cursor: inherit;
-    font-size: 1rem;
-    user-select: none;
-    transition: color 0.2s;
-    border-bottom: 1px solid rgba(168, 81, 151, 0.3);
-}
-
-.check-item input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-}
-
-.checkmark {
-    position: relative;
-    height: 25px;
-    width: 25px;
-    background-color: transparent;
-    border: 1.5px solid #A85197;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-bottom: -8px;
-
-    /* Dùng Flexbox để căn giữa dấu tick bên trong */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-   
-}
-
-/* Khoảng cách cho chữ */
-.check-item .text {
-    margin-left: 15px;
-  
-}
-
-/* --- HIỆU ỨNG HOVER --- */
-.check-item:hover .text {
-    color:#A85197;
-}
-
-.check-item:hover .checkmark {
-    background-color: rgba(244, 218, 124, 0.3); /* Màu vàng nhạt khi hover */
-}
-
-/* --- KHI CHECKBOX ĐƯỢC TICK --- */
-.check-item input:checked ~ .checkmark {
-    background-color: #A85197;
-    border-color: #A85197;
-}
-
-.check-item input:checked ~ .text {
-    text-decoration: line-through;
-}
-
-/* --- ĐỊNH DẠNG DẤU TICK (CĂN GIỮA) --- */
-.checkmark:after {
-    content: "";
-    display: none; /* Ẩn mặc định */
-    
-    /* Vẽ dấu tick */
-    width: 5px;
-    height: 10px;
-    border: solid #ffffff;
-    border-width: 0 2.5px 2.5px 0;
-    transform: rotate(45deg);
-    
-    /* Nhích nhẹ để cân bằng thị giác do phép xoay 45 độ */
-    margin-top: -2px; 
-}
-
-.check-item input:checked ~ .checkmark:after {
-    display: block; /* Hiện khi tick */
-}
-
-.progress-container {
-    scale: 0.85;
-    position: fixed;
-    right: 70px;
-    top: 45%;
-    transform: translateY(-50%);
-    
-    
-    /* Thiết lập cho phép cuộn */
-    max-height: 100vh; /* Giới hạn chiều cao tối đa là 80% màn hình */
-    overflow-y: auto; /* Hiện thanh cuộn khi nội dung vượt quá max-height */
-    padding-right: 20px; /* Tạo khoảng trống để thanh cuộn không đè lên nội dung */
-    
-    /* Tùy chỉnh thanh cuộn cho gọn gàng */
-
-   /* Cho Firefox (màu thanh : màu nền) */
-    cursor: url("data:image/svg+xml;utf8,<svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M19.6961 3.16675L19.6343 3.22691L19.6945 3.40425C20.3868 5.3848 21.52 7.18223 23.0084 8.66091C24.531 10.1931 26.3908 11.348 28.4392 12.0334L14.8859 25.5867C13.9707 26.5003 13.5131 26.9579 13.0096 27.3506C12.4151 27.8133 11.7722 28.2104 11.0922 28.5349C10.5159 28.8104 9.90315 29.0147 8.67606 29.4232L2.21131 31.5781C1.91548 31.6772 1.59789 31.6918 1.29419 31.6204C0.990487 31.549 0.712702 31.3944 0.492015 31.1738C0.271328 30.9533 0.116476 30.6756 0.0448412 30.372C-0.0267934 30.0683 -0.0123746 29.7507 0.0864794 29.4548L2.24298 22.9885C2.65148 21.763 2.85573 21.1502 3.12965 20.5739C3.45581 19.892 3.85112 19.2524 4.31556 18.6549C4.70823 18.1514 5.16581 17.6954 6.0794 16.7818L19.6961 3.16675Z' fill='black'/><path opacity='0.5' d='M29.8452 10.629C30.4233 10.0508 30.8819 9.36434 31.1948 8.60887C31.5076 7.8534 31.6686 7.0437 31.6685 6.22602C31.6684 5.40833 31.5073 4.59867 31.1943 3.84325C30.8814 3.08784 30.4226 2.40147 29.8444 1.82333C29.2662 1.24519 28.5797 0.786603 27.8242 0.473756C27.0688 0.160909 26.2591 -7.34879e-05 25.4414 2.51661e-08C23.79 0.000148491 22.2063 0.656303 21.0387 1.82412L19.6343 3.22853L19.6944 3.40428C20.3868 5.38483 21.5199 7.18226 23.0084 8.66095C24.531 10.1931 26.3908 11.348 28.4392 12.0335L29.8452 10.629Z' fill='%23A85197'/></svg>") 0 31, auto;
-}
-
-/* Tùy chỉnh thanh cuộn cho Chrome, Safari và Edge */
-.progress-container::-webkit-scrollbar {
-    width: 3px;
-}
-
-.progress-container::-webkit-scrollbar-track {
-    background: #f4f4f4;
-   
-}
-
-.progress-container::-webkit-scrollbar-thumb {
-    background: #A85197;
-   
-}
-
-
-.materials-checklist h3 {
-    font-family: 'OCR A Std';
-}
-
-.top-right-decoration {
-    position: absolute;
-    top: 0;             /* Sát mép trên */
-             /* Sát mép phải */
-    
-    /* Điều chỉnh kích thước dựa theo hình mẫu của bạn */
-    width: 200px;       /* Bạn có thể tăng giảm con số này cho vừa mắt */
-    height: auto;
-    
-    /* z-index thấp để hình nằm dưới các nút bấm nhưng trên nền */
-    z-index: -1;
-    right: -1px;
-}
-
-.subtitle-container {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    
-    /* Tùy chỉnh giao diện chữ giống phong cách note/hiện đại của bạn */
-    font-family: 'OCR A Std', monospace;
-    font-size: 13px;
-    color: #A85197; /* Màu tím chủ đạo */
-    padding: 5px;
-    margin-top: 10px;
-    text-align: center;
-}
-
-/* Class này sẽ được JS thêm vào khi thỏa mãn điều kiện thời gian */
-.subtitle-container.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* 1. Định dạng khối chữ nhật màu trắng (Cố định chiều rộng như hình) */
-.transcript-btn {
-    width: 100%;               /* Hoặc chiều rộng cố định hiện tại của bạn, ví dụ: 500px; */
-    min-height: 40px;          /* Chiều cao tối thiểu khi chỉ có chữ TRANSCRIPT */
-    height: auto;              /* QUAN TRỌNG: Cho phép nút tự giãn dài xuống theo nội dung text */
-    
-    background-color: #ededed; /* Màu nền xám/trắng như trong hình của bạn */
-    border: 1px solid #7a7a7a;  /* Viền của hộp chữ nhật */
-    border-radius: 4px;        /* Bo góc nhẹ như hình */
-    padding: 10px 15px;
-    
-    font-family: 'OCR A Std', monospace;
-    font-size: 13px;
-    color: #000000;            /* Màu chữ TRANSCRIPT */
-    cursor: pointer;
-    gap: 1px;                  /* Thu hẹp khoảng cách giữa chữ TRANSCRIPT và hộp phụ đề (để từ 0px đến 4px tùy ý bạn) */
-    line-height: 1.2;          /* Ép sát khoảng trống dòng của chữ TRANSCRIPT lại */
-
-    /* Sắp xếp chữ TRANSCRIPT ở trên, phụ đề ở dưới */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: all 0.3s ease; /* Hiệu ứng giãn chiều cao mượt mà */
-}
-
-/* 2. Hộp phụ đề nằm bên trong nút */
-.subtitle-container {
-    /* Khi chưa play: Sử dụng bộ 3 này để ẩn chữ nhưng KHÔNG ẩn khối (giúp nút thu nhỏ lại) */
-    display: none;             
-    opacity: 0;
-    
-    font-size: 13px;
-    color: #000000;            /* Màu chữ phụ đề (ví dụ màu tím cho đồng bộ) */
-    font-weight: normal;
-    text-transform: none;      /* Giữ nguyên chữ thường */
-    text-align: center;
-    width: 100%;               /* Chiếm trọn chiều ngang của hộp trắng */
-    line-height: 1.2;
-    transition: opacity 0.3s ease;
-}
-
-/* 3. Khi video chạy đến đoạn code (0s - 12s) và đang PLAY */
-.subtitle-container.show {
-    display: block;            /* Kích hoạt lại khối để đẩy chiều cao nút rộng ra */
-    opacity: 1;                /* Hiện chữ lên mượt mà */
-}
-/* Container bọc thanh timeline */
-.timeline-container {
-    position: relative;
-    width: 90%;
-    padding: 10px 0; /* Tạo vùng đệm mượt mà khi di chuột */
-}
-
-/* Mặc định ẩn hộp xem trước */
+/* Hộp xem trước thời gian khi hover vào timeline */
 .preview-box {
     position: absolute;
-    bottom: 35px; /* Đẩy hộp nằm trên thanh timeline */
+    bottom: 35px; 
     left: 0;
-    transform: translateX(-50%); /* Căn giữa hộp theo con trỏ chuột */
+    transform: translateX(-50%); 
     background-color: rgb(0, 0, 0);
     color: #F4F4F4;
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 12px;
     font-family: 'OCR A Std', monospace;
-    pointer-events: none; /* Tránh việc hộp cản trở chuột tương tác trực tiếp với slider */
-    display: none; /* Mặc định ẩn */
+    pointer-events: none; 
+    display: none; 
     z-index: 100;
-
 }
 
-/* Thêm mũi tên nhỏ dưới hộp preview cho đẹp */
 .preview-box::after {
     content: '';
     position: absolute;
@@ -1334,69 +659,322 @@ html, body {
     border-color: rgba(0, 0, 0, 0.85) transparent;
 }
 
-/* Khi hover vào container thì hiện hộp preview lên */
 .timeline-container:hover .preview-box {
     display: block;
 }
 
-/* Container bọc timeline và hộp preview */
-.timeline-container {
-    position: relative;
-    width: 100%;       /* QUAN TRỌNG: Ép hộp chứa giãn rộng hết cỡ theo hàng */
-    padding: 10px 0;   
-    display: block;    /* Đảm bảo khối độc lập không bị bóp nghẹt */
-}
-
-/* Đảm bảo thanh trượt bên trong cũng chiếm trọn chiều ngang của container */
-#seekSlider {
-    width: 100%;
-    display: block;
+/* --- Hàng phía dưới: Các cụm nút bấm điều khiển --- */
+.control-row-bottom {
+    display: flex;
+    justify-content: center;
     align-items: center;
+    width: 100%;
+    margin-top: -10px;
+    gap: 220px; /* Định vị khoảng cách lớn trên Desktop của bạn */
+}
+
+.left-btns {
+    display: flex;
+    align-items: center; 
+    gap: 10px;
+}
+
+/* Nút giao diện UI đen tròn dẹt */
+.ui-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px; 
+    width: auto; /* Cho phép nút tự động lấy chiều rộng theo nội dung */
+    height: 40px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
     cursor: pointer;
-    margin: 0;
-    accent-color: #f4da7c; 
-    
-    
+    font-family: 'OCR A Std', monospace;
+    font-size: 15px;
+    white-space: nowrap; /* Ngăn chữ bị xuống dòng khi nút co lại */
+    gap: 10px;
+    transition: background 0.3s;
 }
-.subtitle-container {
+
+.ui-btn:hover { background: #222; }
+.ui-btn svg { width: 16px; height: 16px; }
+
+.icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Logic ẩn hiện icon Play/Pause qua class .playing */
+.icon-pause { display: none; }
+.icon-play { display: block; }
+.ui-btn.playing .icon-play { display: none; }
+.ui-btn.playing .icon-pause { display: block; }
+
+/* Cụm chỉnh âm lượng Volume Wrapper */
+.volume-wrapper {
+    display: flex;
+    align-items: center;
+    background: #000; 
+    border-radius: 20px;
+    overflow: hidden;
+    height: 40px;
+    transition: all 0.3s ease;
+}
+
+.volume-wrapper:hover { padding-right: 15px; }
+
+.volume-control {
+    width: 0;
     opacity: 0;
-    transition: opacity 0.25s ease-in-out; /* Khi thêm class .show, nguyên câu nói sẽ hiện lên mượt mà trong 0.25 giây */
+    display: flex;
+    align-items: center;
+    transition: width 0.3s ease, opacity 0.2s ease;
 }
-.subtitle-container.show {
+
+.volume-wrapper:hover .volume-control {
+    width: 80px; 
     opacity: 1;
+    margin-left: 5px;
 }
 
-.transcript-btn {
-    /* --- ĐỊNH VỊ BAN ĐẦU: NẰM DƯỚI THANH CONTROL TỰ NHIÊN --- */
-    position: relative;        
-    margin: 15px auto 0 auto;  /* Giữ nguyên để tự động căn giữa dưới thanh tím */
-    z-index: 100;             
-    cursor: move;              
+#volumeSlider {
+    width: 100%;
+    cursor: pointer;
+    accent-color: #A85197; 
+    height: 4px;
+}
 
-    /* --- CẬP NHẬT CHIỀU RỘNG NHỎ GỌN NHƯ BAN ĐẦU --- */
-    width: 650px;              /* Đổi thành chiều rộng cố định của bạn (ví dụ: 600px, 650px...) */
-    max-width: 90%;            /* Lớp bảo vệ giúp hộp không bị tràn nếu xem trên màn hình nhỏ */
-    
-    /* Các thuộc tính giao diện khác giữ nguyên */
-    height: auto;
-    background-color: #ededed;
-    border: 1px solid #000000;
-  
+#volumeBtn {
+    min-width: 40px !important;
+    padding: 0 10px !important;
+    background: transparent;
+}
+#volumeBtn svg { height: auto; display: block; }
+
+/* Cụm chỉnh tốc độ Speed Wrapper */
+.speed-wrapper {
+    display: flex;
+    align-items: center;
+    background: #000;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 40px;
+    transition: all 0.3s ease;
+}
+
+.speed-wrapper:hover { padding-right: 15px; }
+
+.speed-control {
+    width: 0;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: width 0.3s ease, opacity 0.2s ease;
+}
+
+.speed-wrapper:hover .speed-control {
+    width: 120px; 
+    opacity: 1;
+    margin-left: 5px;
+}
+
+#speedSlider {
+    width: 70px;
+    cursor: pointer;
+    accent-color: #E6CD4D; 
+}
+
+#playspeedBtn {
+    min-width: 40px !important;
+    padding: 0 10px !important;
+    background: transparent;
+}
+
+/* =================================================================
+   4. HỘP CHỮ TRANSCRIPT KÉO THẢ & PHỤ ĐỀ
+   ================================================================= */
+.transcript-btn {
+    position: relative;        
+    margin: 15px auto 0 auto;  /* Tự động căn giữa dưới thanh điều khiển */
+    width: 650px;              /* Chiều rộng cố định nguyên bản */
+    max-width: 90%;            
+    height: auto;              /* Tự giãn dài xuống theo nội dung text */
+    background-color: #ededed; 
+    border: 1px solid #000000;  
+    border-radius: 4px;        
     padding: 10px 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0px;
-  
+    gap: 0px;                  /* Thu hẹp khoảng cách giữa chữ gốc và phụ đề */
+    line-height: 1.2;          
+    cursor: move;              
+    z-index: 100;             
+    transition: all 0.3s ease; 
 }
 
+.subtitle-container {
+    display: none;             /* Khi chưa play thì ẩn khối để nút thu nhỏ */
+    opacity: 0;
+    width: 100%;               
+    font-family: 'OCR A Std', monospace;
+    font-size: 13px;
+    color: #000000;            
+    font-weight: normal;
+    text-transform: none;      
+    text-align: center;
+    line-height: 1.2;
+    margin-top: 10px;
+    transition: opacity 0.25s ease-in-out;
+}
+
+.subtitle-container.show {
+    display: block;            /* Kích hoạt để đẩy chiều cao nút rộng ra */
+    opacity: 1;                
+}
+
+/* =================================================================
+   5. CỤM TIẾN TRÌNH & CHECKLIST (CỤM BÊN PHẢI)
+   ================================================================= */
+.progress-container {
+    scale: 0.85;
+    position: fixed; /* Cố định bên phải màn hình */
+    right: 70px;
+    top: 45%;
+    transform: translateY(-50%);
+    max-height: 100vh; /* Giới hạn chiều cao tối đa */
+    overflow-y: auto; /* Hiện thanh cuộn khi nội dung vượt quá max-height */
+    overflow-x: hidden;
+    padding-right: 20px; /* Tạo khoảng trống để thanh cuộn không đè lên nội dung */
+    cursor: url("data:image/svg+xml;utf8,<svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M19.6961 3.16675L19.6343 3.22691L19.6945 3.40425C20.3868 5.3848 21.52 7.18223 23.0084 8.66091C24.531 10.1931 26.3908 11.348 28.4392 12.0334L14.8859 25.5867C13.9707 26.5003 13.5131 26.9579 13.0096 27.3506C12.4151 27.8133 11.7722 28.2104 11.0922 28.5349C10.5159 28.8104 9.90315 29.0147 8.67606 29.4232L2.21131 31.5781C1.91548 31.6772 1.59789 31.6918 1.29419 31.6204C0.990487 31.549 0.712702 31.3944 0.492015 31.1738C0.271328 30.9533 0.116476 30.6756 0.0448412 30.372C-0.0267934 30.0683 -0.0123746 29.7507 0.0864794 29.4548L2.24298 22.9885C2.65148 21.763 2.85573 21.1502 3.12965 20.5739C3.45581 19.892 3.85112 19.2524 4.31556 18.6549C4.70823 18.1514 5.16581 17.6954 6.0794 16.7818L19.6961 3.16675Z' fill='black'/><path opacity='0.5' d='M29.8452 10.629C30.4233 10.0508 30.8819 9.36434 31.1948 8.60887C31.5076 7.8534 31.6686 7.0437 31.6685 6.22602C31.6684 5.40833 31.5073 4.59867 31.1943 3.84325C30.8814 3.08784 30.4226 2.40147 29.8444 1.82333C29.2662 1.24519 28.5797 0.786603 27.8242 0.473756C27.0688 0.160909 25.2591 -7.34879e-05 25.4414 2.51661e-08C23.79 0.000148491 22.2063 0.656303 21.0387 1.82412L19.6343 3.22853L19.6944 3.40428C20.3868 5.38483 21.5199 7.18226 23.0084 8.66095C24.531 10.1931 26.3908 11.348 28.4392 12.0335L29.8452 10.629Z' fill='%23A85197'/></svg>") 0 31, auto !important;
+}
+
+.progress-container::-webkit-scrollbar { width: 3px; }
+.progress-container::-webkit-scrollbar-track { background: #f4f4f4; }
+.progress-container::-webkit-scrollbar-thumb { background: #A85197; }
+
+/* Checklist vật liệu */
+.materials-checklist {
+    margin-bottom: 35px; 
+    padding-left: 10px;
+    font-family: 'Kulim Park', sans-serif;
+}
+
+.materials-checklist h3 {
+    font-family: 'OCR A Std', monospace;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #9e6798;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+}
+
+.check-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 10px 0;
+    font-size: 1rem;
+    user-select: none;
+    border-bottom: 1px solid rgba(168, 81, 151, 0.3);
+    transition: color 0.2s;
+    cursor: inherit;
+}
+
+.check-item:last-child { border-bottom: none; }
+.check-item input { position: absolute; opacity: 0; height: 0; width: 0; cursor: pointer; }
+.check-item .text { margin-left: 15px; }
+.check-item:hover .text { color: #A85197; }
+.check-item:hover .checkmark { background-color: rgba(244, 218, 124, 0.3); }
+.check-item input:checked ~ .text { text-decoration: line-through; }
+
+.checkmark {
+    position: relative;
+    height: 25px;
+    width: 25px;
+    background-color: transparent;
+    border: 1.5px solid #A85197;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-bottom: -8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.check-item input:checked ~ .checkmark { background-color: #A85197; border-color: #A85197; }
+.checkmark:after {
+    content: "";
+    display: none; 
+    width: 5px;
+    height: 10px;
+    border: solid #ffffff;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+    margin-top: -2px; 
+}
+.check-item input:checked ~ .checkmark:after { display: block; }
+
+/* Các bước thực hiện (Progress Bar Steps) */
+.progress-bar {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.progress-bar li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px; 
+    position: relative;
+    letter-spacing: -1px;
+}
+
+.progress-bar li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 20px; 
+    top: 40px;
+    width: 1.5px; 
+    height: 50px; 
+    background: #d6b43b;
+}
+
+.progress-bar li:hover .step-text { opacity: 0.6; }
+
+.step-num {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #F4F4F4 0%, #A85197 70%);
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    z-index: 1;
+}
+
+.step-text { margin-left: 20px; font-size: 1.2rem; }
+.progress-bar li.active .step-num { background: radial-gradient(circle, #e2dfdf 0%, #efce12 70%) !important; }
+.progress-bar li.active .step-text { color: #A85197; font-weight: bold; }
+
+/* =================================================================
+   6. KHỐI BẢNG THÔNG TIN OVERLAY (POPUP ABOUT)
+   ================================================================= */
 .overlay-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Làm mờ nền 60% */
+    background-color: rgba(0, 0, 0, 0.6); 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1406,10 +984,7 @@ html, body {
     transition: opacity 0.3s ease;
 }
 
-.overlay-container.active {
-    opacity: 1;
-    pointer-events: auto;
-}
+.overlay-container.active { opacity: 1; pointer-events: auto; }
 
 .overlay-box {
     background-color: #ededed;
@@ -1425,35 +1000,200 @@ html, body {
     transition: transform 0.3s ease;
 }
 
-.overlay-container.active .overlay-box {
-    transform: scale(1);
+.overlay-container.active .overlay-box { transform: scale(1); }
+.overlay-box h2 { font-size: 16px; margin-bottom: 15px; color: #000; font-weight: bold; }
+.overlay-box p { font-size: 13px; line-height: 1.6; color: #222; text-align: justify; }
+.close-btn { position: absolute; top: 8px; right: 12px; background: none; border: none; font-size: 22px; cursor: pointer; color: #666666; }
+.close-btn:hover { color: #000000; }
+
+/* =================================================================
+   7. HỆ THỐNG PHÂN CHIA RESPONSIVE CHO MÀN HÌNH NHỎ
+   ================================================================= */
+@media (max-width: 1024px) {
+    .video-container {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 90%; 
+        margin: 20px auto; /* Căn giữa bằng margin */
+    }
+
+    .control-row-bottom {
+        gap: 100px;
+    }
+
+    body {
+        overflow-y: auto;
+        height: auto;
+        display: block;
+    }
 }
 
-.overlay-box h2 {
-    font-size: 16px;
-    margin-bottom: 15px;
-    color: #000000;
-    font-weight: bold;
+@media (max-width: 768px) {
+    .control-row-bottom {
+        gap: 10px; 
+        justify-content: space-evenly; 
+    }
+    
+    .ui-btn {
+        padding: 0 15px;
+        font-size: 12px;
+    }
+}
+@media (max-width: 1024px) {
+    .custom-controls {
+        padding: 25px 20px; /* Giảm nhẹ padding tổng thể */
+    }
+
+    .control-row-top {
+        width: 100%;
+    }
+
+    .control-row-bottom {
+        gap: 0; 
+        justify-content: space-between; /* Tự động dạt đều ra 2 bên biên khung */
+        padding: 0 5px;
+    }
 }
 
-.overlay-box p {
-    font-size: 13px;
-    line-height: 1.6;
-    color: #222222;
-    text-align: justify;
+/* --- Điện thoại di động (Dưới 768px) --- */
+@media (max-width: 768px) {
+    .custom-controls {
+        padding: 15px 10px; /* Ép không gian cực kỳ nhỏ gọn */
+        gap: 8px;           /* Thu hẹp khoảng cách giữa thanh Timeline và hàng nút */
+    }
+
+    /* Ép tất cả các cụm (Nút bấm, Volume, Speed) xếp chung trên một hàng gọn gàng */
+    .control-row-bottom {
+        flex-direction: row; 
+        justify-content: space-between;
+        gap: 5px;
+        margin-top: 0;
+    }
+
+    /* Thu nhỏ cụm nút Play/Next/Prev nằm sát lại nhau */
+    .left-btns {
+        gap: 4px; 
+    }
+
+    /* Giảm size chữ và thu hẹp vùng đệm của nút UI cho thật nhỏ gọn */
+    .ui-btn {
+        height: 32px;       /* Hạ chiều cao từ 40px xuống 32px */
+        padding: 0 10px;    /* Thu hẹp padding ngang */
+        font-size: 11px;    /* Hạ size chữ nhỏ xuống */
+        gap: 5px;
+    }
+    
+    .ui-btn svg {
+        width: 12px;        /* Thu nhỏ icon SVG bên trong nút */
+        height: 12px;
+    }
+
+    /* Giữ cụm Volume & Speed siêu nhỏ trên cùng một hàng hàng ngang */
+    .volume-wrapper,
+    .speed-wrapper {
+        height: 32px;       /* Đồng bộ chiều cao 32px bằng nút bấm */
+        background: #000;
+    }
+
+    /* Trên điện thoại, cố định thanh trượt hiển thị ngắn và thanh thoát */
+    .volume-control,
+    .speed-control {
+        width: 45px !important; /* Thu ngắn độ dài thanh trượt để không bị tràn */
+        opacity: 1 !important;
+        margin-left: 3px;
+    }
+
+    .speed-wrapper:hover .speed-control {
+        width: 45px;
+    }
+
+    #volumeSlider,
+    #speedSlider {
+        width: 100%;
+        height: 2px;        /* Làm thanh trượt mảnh mai hơn */
+    }
+
+    /* Thu nhỏ riêng nút Volume và Speed trong wrapper */
+    #volumeBtn,
+    #playspeedBtn {
+        min-width: 30px !important;
+        padding: 0 5px !important;
+    }
 }
 
-.close-btn {
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    background: none;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-    color: #666666;
+/* --- Điện thoại siêu nhỏ (Dưới 400px) --- */
+@media (max-width: 400px) {
+    .custom-controls {
+        padding: 10px 5px;
+    }
+    
+    /* Ẩn bớt text chữ số của tốc độ để giải phóng không gian cho màn hình quá bé */
+    .speed-control span {
+        display: none; 
+    }
+    
+    .volume-control,
+    .speed-control {
+        width: 35px !important; /* Ép thanh trượt ngắn thêm nữa */
+    }
+
+    .ui-btn {
+        font-size: 10px;
+        padding: 0 6px;
+    }
+}
+@media (max-width: 768px) {
+    .custom-controls {
+        padding: 15px 10px; 
+        gap: 8px;
+        width: 88%;            
+        
+        /* --- BỔ SUNG DÒNG NÀY --- */
+        margin-top: 32px; /* Đẩy thanh điều khiển dịch xuống 12px riêng trên thiết bị di động */
+    }
+    
+    /* Các dòng code flex-direction, left-btns... bên dưới giữ nguyên */
 }
 
-.close-btn:hover {
-    color: #000000;
+@media (max-width: 1024px) {
+    /* --- KÍCH HOẠT CUỘN DỌC TOÀN TRANG CHO MOBILE / TABLET --- */
+    html, body {
+        overflow-y: auto !important;  /* Cho phép vuốt cuộn lên xuống tự nhiên */
+        overflow-x: hidden !important; /* Khóa cứng cuộn ngang để giao diện không bị lệch vẹo */
+        height: auto !important;       /* Giải phóng chiều cao cố định 100vh */
+        min-height: 100vh;
+    }
+
+    /* Đảm bảo container bọc video không bị ghim chết một chỗ */
+    .video-container {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        margin: 40px auto 20px auto; /* Căn giữa, tạo khoảng cách thoáng với rìa trên */
+        width: 90%; 
+    }
+
+    /* Cụm tiến trình khi rơi xuống dưới cũng tự giãn theo trang */
+    .progress-container {
+        position: relative;
+        top: 0;
+        right: 0;
+        transform: none;
+        width: 80%;
+        max-width: 650px;
+        height: auto;
+        max-height: none;       /* Bỏ giới hạn chiều cao */
+        overflow-y: visible;    /* Đi theo luồng cuộn dọc của toàn trang body */
+        margin: 40px auto;
+        padding-right: 0;
+        scale: 1;
+    }
+
+    /* Ẩn thanh cuộn riêng lẻ của progress vì giờ đã cuộn chung cả trang */
+    .progress-container::-webkit-scrollbar {
+        display: none;
+    }
 }
