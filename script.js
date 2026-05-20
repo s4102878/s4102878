@@ -1,64 +1,70 @@
 document.addEventListener('DOMContentLoaded', () => {
     // =================================================================
-    // PART A: XỬ LÝ LỆNH TRANG LANDING (NÚT ABOUT & OVERLAY POP-UP)
+    // PART 1: LANDING PAGE LOGIC (ABOUT BUTTON)
     // =================================================================
+    
+    // Get the DOM elements for the landing page overlay
     const aboutBtn = document.getElementById('aboutBtn');
     const aboutOverlay = document.getElementById('aboutOverlay');
     const closeOverlayBtn = document.getElementById('closeOverlayBtn');
 
-    // Mở hộp thông tin khi click vào nút ABOUT
+    // Show the 'About' popup when the button is clicked
     aboutBtn?.addEventListener('click', () => {
         aboutOverlay?.classList.add('active');
     });
 
-    // Đóng hộp thông tin khi click vào dấu X
+    // Hide the popup when the 'X' close button is clicked
     closeOverlayBtn?.addEventListener('click', () => {
         aboutOverlay?.classList.remove('active');
     });
 
-    // Click ra vùng nền đen bên ngoài cũng tự đóng hộp
-    aboutOverlay?.addEventListener('click', (e) => {
-        if (e.target === aboutOverlay) {
-            aboutOverlay.classList.remove('active');
-        }
-    });
 
     // =================================================================
-    // PART B: XỬ LÝ ĐIỀU KHIỂN VIDEO VÀ PHỤ ĐỀ (TRANG HOME)
+    // PART 2: VIDEO PLAYER & SUBTITLES (HOME PAGE)
     // =================================================================
+
+    // Grab all the necessary DOM elements for the custom video player
     const video = document.getElementById('mainVideo');
     const playPauseBtn = document.getElementById('playPauseBtn');
     const resumeBtn = document.getElementById('resumeBtn');
     const skipBtn = document.getElementById('skipBtn');
     const seekSlider = document.getElementById('seekSlider');
     const currentTimeText = document.getElementById('currentTime');
-    const backBtn = document.getElementById('btn-back');
     const fullscreenBtn = document.getElementById('fullscreenBtn');
     const volumeBtn = document.getElementById('volumeBtn');
     const volumeSlider = document.getElementById('volumeSlider');
-    const progressItems = document.querySelectorAll('.progress-bar li');
-
     const speedSlider = document.getElementById('speedSlider');
     const speedValue = document.getElementById('speedValue');
     const subtitleBox = document.getElementById('subtitleBox');
     const previewBox = document.getElementById('previewBox');
+    const progressItems = document.querySelectorAll('.progress-bar li');
+    const backBtn = document.getElementById('btn-back');    
 
+    // Define the start times (in seconds) for each step in the tutorial
     const stepTimes = [0, 28, 71, 126, 178, 240]; 
 
-    // SVGs Volume
+    // Hardcoded SVGs for the Volume button states
     const iconVolumeOn = `<svg width="38" height="39" viewBox="0 0 38 39" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M20.5293 0V39L8.2557 28.3811H0V10.6189H8.2557L20.5293 0ZM32.4157 5.89115C34.1861 7.67801 35.5905 9.79939 36.5487 12.1342C37.5068 14.4689 38 16.9713 38 19.4985C38 22.0257 37.5068 24.5281 36.5487 26.8629C35.5905 29.1976 34.1861 31.319 32.4157 33.1059L30.3423 31.0129C33.3671 27.9594 35.0664 23.8181 35.0664 19.5C35.0664 15.1819 33.3671 11.0406 30.3423 7.9871L32.4157 5.89115ZM26.3215 12.1731C27.2747 13.1352 28.0309 14.2775 28.5468 15.5347C29.0627 16.7918 29.3283 18.1392 29.3283 19.5C29.3283 20.8608 29.0627 22.2082 28.5468 23.4653C28.0309 24.7225 27.2747 25.8648 26.3215 26.8269L24.248 24.7339C24.929 24.0467 25.4693 23.2307 25.8378 22.3327C26.2064 21.4346 26.3961 20.4721 26.3961 19.5C26.3961 18.5279 26.2064 17.5654 25.8378 16.6673C25.4693 15.7693 24.929 14.9533 24.248 14.2661L26.3215 12.1731Z" fill="#F4F4F4"/></svg>`;
     const iconVolumeOff = `<svg width="39" height="40" viewBox="0 0 39 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.4375 0.858643V39.8586L9.1639 29.2398H0.908203V11.4775H9.1639L21.4375 0.858643ZM33.3239 6.74979C35.0943 8.53665 36.4987 10.658 37.4569 12.9928C38.415 15.3276 38.9082 17.83 38.9082 20.3572C38.9082 22.8843 38.415 25.3868 37.4569 27.7215C36.4987 30.0563 35.0943 32.1777 33.3239 33.9645L31.2505 31.8715C34.2753 28.8181 35.9746 24.6768 35.9746 20.3586C35.9746 16.0405 34.2753 11.8992 31.2505 8.84574L33.3239 6.74979ZM27.2297 13.0317C28.1829 13.9939 28.9391 15.1361 29.455 16.3933C29.9709 17.6505 30.2365 18.9979 30.2365 20.3586C30.2365 21.7194 29.9709 23.0668 29.455 24.324C28.9391 25.5812 28.1829 26.7234 27.2297 27.6856L25.1562 25.5926C25.8372 24.9053 26.3775 24.0894 26.746 23.1913C27.1146 22.2933 27.3043 21.3307 27.3043 20.3586C30.2365 19.3866 27.1146 18.424 26.746 17.526C26.3775 16.6279 25.8372 15.812 25.1562 15.1247L27.2297 13.0317Z" fill="#F4F4F4"/><path d="M0.908203 0.858643L35.4082 37.3586" stroke="#F4F4F4" stroke-width="2.5"/></svg>`;
 
+    // --- SUPPORT FUNCTIONS ---
+
+    // Function to visually sync the right-side checklist with the current video time
     function updateProgressBar() {
         if (!video || !progressItems.length) return;
+        
         const currentTime = video.currentTime;
         let currentStepIndex = 0;
+        
+        // Figure out which step we are currently on based on the video's time
         for (let i = stepTimes.length - 1; i >= 0; i--) {
             if (currentTime >= stepTimes[i]) {
                 currentStepIndex = i;
                 break;
             }
         }
+        
+        // Loop through the list items and states
         progressItems.forEach((li, index) => {
             li.classList.remove('active', 'completed');
             if (index < currentStepIndex) {
@@ -69,8 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Function to toggle the Play/Pause button appearance
     function updateUI() {
         if (!video || !playPauseBtn) return;
+        
         const btnText = playPauseBtn.querySelector('.btn-text');
         if (video.paused || video.ended) {
             playPauseBtn.classList.remove('playing');
@@ -81,13 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Chỉ thực thi lệnh video nếu tìm thấy thẻ video trên trang
+    // --- VIDEO EVENT LISTENERS ---
+
+    // Only run these listeners if the video element actually exists on the page
     if (video) {
+        
+        // Toggle play/pause when the main button is clicked
         playPauseBtn?.addEventListener('click', () => {
             video.paused ? video.play() : video.pause();
             updateProgressBar();
         });
 
+        // Restart the video from the beginning
         resumeBtn?.addEventListener('click', () => { 
             video.currentTime = 0; 
             video.play(); 
@@ -95,11 +108,13 @@ document.addEventListener('DOMContentLoaded', () => {
             updateProgressBar(); 
         });
 
+        // Skip forward 5 seconds
         skipBtn?.addEventListener('click', () => {
             video.currentTime = Math.min(video.currentTime + 5, video.duration);
             updateProgressBar();
         });
 
+        // Adjust the video playback speed
         if (speedSlider) {
             speedSlider.addEventListener('input', (e) => {
                 const val = parseFloat(e.target.value);
@@ -108,19 +123,25 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // Keep the UI synced when the video plays or pauses naturally
         video.addEventListener('play', updateUI);
-        video.addEventListener('pause', () => { updateUI(); });
+        video.addEventListener('pause', updateUI);
         
-        // Sự kiện thời gian và cập nhật phụ đề bằng mảng đối tượng phẳng
+        // Update sliders, timers, and subtitles as the video plays
         video.addEventListener('timeupdate', () => {
             if (video.duration && seekSlider) {
+                // Update timeline slider position
                 seekSlider.value = (video.currentTime / video.duration) * 100;
+                
+                // Format and update the current time text 
                 let mins = Math.floor(video.currentTime / 60);
                 let secs = Math.floor(video.currentTime % 60);
                 if (currentTimeText) currentTimeText.textContent = `${mins}:${secs < 10 ? '0' + secs : secs}`;
                 
+                // Keep the side progress bar synced
                 updateProgressBar();
 
+                // Subtitles: Matches current time to the correct text
                 if (subtitleBox) {
                     const subtitleData = [
                         { start: 2, end: 14, text: "So for today art time we gonna make this really cool handheld windmill which is really easy to make you don’t need lots of things." },
@@ -159,13 +180,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Xử lý sự kiện di chuột (Hover) hiện thời gian xem trước trên timeline
+        // Hover over the timeline to see a timestamp preview box
         seekSlider?.addEventListener('mousemove', (e) => {
             if (!video.duration || !previewBox) return;
+            
             const rect = seekSlider.getBoundingClientRect();
             const offsetX = e.clientX - rect.left;
             let percentage = offsetX / rect.width;
             
+            // Constrain percentage between 0 and 1
             if (percentage < 0) percentage = 0;
             if (percentage > 1) percentage = 1;
             
@@ -177,20 +200,23 @@ document.addEventListener('DOMContentLoaded', () => {
             previewBox.style.left = `${offsetX}px`;
         });
 
+        // Seek the video when the user drags the timeline slider
         seekSlider?.addEventListener('input', () => {
             video.currentTime = (seekSlider.value / 100) * video.duration;
             updateProgressBar();
         });
 
+        // Handle the volume slider input
         if (volumeSlider) {
             volumeSlider.addEventListener('input', (e) => {
                 const val = e.target.value;
                 video.volume = val;
-                video.muted = (val == 0);
+                video.muted = (val == 0); // Mute completely if slider hits 0
                 volumeBtn.innerHTML = (val == 0) ? iconVolumeOff : iconVolumeOn;
             });
         }
 
+        // Allow clicking on a step in the right sidebar to jump to that part of the video
         progressItems.forEach((item, index) => {
             item.addEventListener('click', () => {
                 video.currentTime = stepTimes[index];
@@ -199,12 +225,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
+        // Handle fullscreen request (includes fallbacks for different browsers)
         fullscreenBtn?.addEventListener('click', () => {
             if (video.requestFullscreen) video.requestFullscreen();
             else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
             else if (video.msRequestFullscreen) video.msRequestFullscreen();
         });
 
+        // Toggle mute/unmute when clicking the speaker icon
         volumeBtn?.addEventListener('click', () => {
             video.muted = !video.muted;
             volumeBtn.innerHTML = video.muted ? iconVolumeOff : iconVolumeOn;
@@ -212,7 +240,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Logic nút quay lại Back
+    // =================================================================
+    // PART 3: PAGE TRANSITION & DRAGGABLE TRANSCRIPT BOX
+    // =================================================================
+
+    // Smooth fade-out transition when clicking the 'Back' button
     if (backBtn) {
         backBtn.addEventListener('click', () => {
             document.body.style.opacity = '0';
@@ -221,14 +253,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Logic kéo thả (Drag) hộp Transcript tự do khắp màn hình
+    // Make the transcript box freely draggable around the screen
     const dragTarget = document.getElementById('startTutorialBtn'); 
+    
     if (dragTarget) {
         let isDragging = false;
         let offsetX = 0;
         let offsetY = 0;
 
+        // When the mouse is pressed down on the box, prepare for dragging
         dragTarget.addEventListener('mousedown', (e) => {
+            // Prevent dragging if the user is just clicking a button inside it
             if (e.target.tagName === 'BUTTON' && e.target !== dragTarget) return;
 
             isDragging = true;
@@ -236,19 +271,22 @@ document.addEventListener('DOMContentLoaded', () => {
             offsetX = e.clientX - rect.left;
             offsetY = e.clientY - rect.top;
 
+            // Set styles so it pops out of the normal layout flow
             dragTarget.style.position = 'fixed';
             dragTarget.style.margin = '0'; 
             dragTarget.style.left = rect.left + 'px';
             dragTarget.style.top = rect.top + 'px';
-            dragTarget.style.opacity = '0.9';
+            dragTarget.style.opacity = '0.9'; // Slight transparency while dragging
         });
 
+        // Follow the mouse movements to update the box's position
         document.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
 
             let newX = e.clientX - offsetX;
             let newY = e.clientY - offsetY;
 
+            // Constrain the box to stay within the window boundaries
             if (newX < 0) newX = 0;
             if (newY < 0) newY = 0;
             if (newX + dragTarget.offsetWidth > window.innerWidth) {
@@ -262,14 +300,15 @@ document.addEventListener('DOMContentLoaded', () => {
             dragTarget.style.top = newY + 'px';
         });
 
+        // Drop the box when the mouse is released
         document.addEventListener('mouseup', () => {
             if (isDragging) {
                 isDragging = false;
-                dragTarget.style.opacity = '1';
+                dragTarget.style.opacity = '1'; // Restore full opacity
             }
         });
     }
 
+    // Run this once on load to ensure the sidebar progress matches the video's initial state
     updateProgressBar();
 });
-
