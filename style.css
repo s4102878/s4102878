@@ -34,6 +34,10 @@ html, body {
 
 /* =================================================================
    2. LANDING PAGE (INDEX.HTML)
+     I designed the splash screen to immediately engage and appeal to users from the 
+     first interaction. It includes two main buttons: an About button that reveals an
+     introduction to the tutorial, and a Start button that takes users to the media player.
+     Users can also interact with the windmill elements by hovering over them.
    ================================================================= */
 .landing-container {
     position: relative;
@@ -258,6 +262,9 @@ html, body {
 
 /* =================================================================
    4. VISUAL ASSET WRAPPERS (LEFT, CENTER, RIGHT)
+   For the crafting context, I designed these visuals to feel playful and engaging, 
+   inspired by the motion of a spinning windmill to match the fun, hands-on nature of 
+   the tutorial.
    ================================================================= */
 /* Left asset */
 .visual-left-wrapper {
@@ -388,6 +395,10 @@ html, body {
 
 /* =================================================================
    6. VIDEO CONTAINER & CONTROLS
+     I created a simple control bar designed for a cooking tutorial context, including
+     play/pause, 5-second skip forward, replay, speed control, volume, and full screen.
+     These features help users easily follow at their own pace and 
+     improve overall viewing flexibility.
    ================================================================= */
 .video-container {
     position: absolute;
@@ -586,7 +597,11 @@ html, body {
 #volumeBtn svg { height: auto; display: block; }
 
 /* =================================================================
-   7. TRANSCRIPT & SUBTITLES
+   7. TRANSCRIPT 
+     I included a transcript panel as I felt it would be really helpful for users to follow
+     along with the video. I reviewed the video multiple times to capture the full
+     transcript, then styled the panel using CSS. Using JavaScript, users can drag and 
+     reposition the panel anywhere on the layout for added convenience.
    ================================================================= */
 .transcript-btn {
     position: relative;        
@@ -604,7 +619,8 @@ html, body {
     gap: 0px;                  
     line-height: 1.2;          
     cursor: move;              
-    z-index: 100;             
+    z-index: 100;    
+    font-family: 'OCR A Std', monospace;         
     transition: all 0.3s ease; 
 }
 
@@ -630,6 +646,9 @@ html, body {
 
 /* =================================================================
    8. PROGRESS BAR & CHECKLIST
+     I added a materials checklist to help users easily see  and track what they need before
+     starting the tutorial. I also included a progress bar so users can follow the steps
+     more clearly and quickly jump to specific parts of the video when needed.
    ================================================================= */
 .progress-container {
     scale: 0.85;
