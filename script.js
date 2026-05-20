@@ -273,13 +273,3 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProgressBar();
 });
 
-// Hiệu ứng di chuột nền
-document.addEventListener('mousemove', (e) => {
-    const trail = document.querySelector('.background-trail');
-    if (!trail) return;
-    const moveX = (e.clientX - window.innerWidth / 2) * 0.02;
-    const moveY = (e.clientY - window.innerHeight / 2) * 0.02;
-    trail.style.marginLeft = `${moveX}px`;
-    trail.style.marginTop = `${moveY}px`;
-});
-

@@ -434,72 +434,72 @@ html, body {
 }   
 
 
-//* =================================================================
-   5. RESPONSIVE LAYOUT - ÉP XẾP DỌC THẲNG HÀNG TRANG CHỦ
+/* =================================================================
+   5. RESPONSIVE LAYOUT
    ================================================================= */
 @media (max-width: 768px) {
-    /* 1. Cho phép toàn bộ trang Home cuộn dọc tự do */
-    html, body, .home-page {
+    /* 1. Cho phép trang Home kích hoạt cuộn dọc để chứa đủ 3 khối */
+    .home-page {
         overflow-y: auto !important;
-        height: auto !important;
-        min-height: 100vh;
     }
 
-    /* 2. Cấu hình container bọc chính làm trục đứng chính */
+    /* 2. CẬP NHẬT TẠI ĐÂY: Thu hẹp khoảng cách giữa 3 khối */
     .main-container {
-        display: flex !important;
-        flex-direction: column !important; /* ÉP XOAY DỌC THÀNH 1 CỘT ĐỨNG */
-        align-items: center !important;     /* Căn tất cả các chong chóng vào chính giữa theo trục dọc */
-        justify-content: flex-start !important; 
-        height: auto !important;             
+        flex-direction: column;   
+        justify-content: flex-start; 
+        height: auto;             
         min-height: 100vh;
         
-        gap: 50px !important;              /* Khoảng cách đứng cố định 50px giữa các chong chóng */
-        padding: 100px 20px 80px 20px !important; /* Padding trên dưới thoáng đãng */
+        /* --- ĐÃ SỬA --- */
+        gap: 15px;                /* GIẢM TỪ 40px XUỐNG 15px: Giúp 3 khối sát rạt lại gần nhau */
+        padding: 80px 20px 20px 20px; /* Giảm padding-top xuống 80px để đẩy cả cụm lên cao hơn một chút */
+        
+        overflow-y: visible;
     }
 
-    /* 3. KHÓA CỨNG KÍCH THƯỚC KHUNG MẸ CỦA 3 KHỐI */
+    /* 3. Đưa 3 khối wrapper về trạng thái xếp hàng tự nhiên */
     .visual-left-wrapper, 
     .visual-center-wrapper, 
     .visual-right-wrapper {
-        position: relative !important; /* Chuyển về relative để xếp chồng tự nhiên theo luồng dọc */
+        position: relative;        
         top: 0 !important;         
         left: 0 !important;        
         right: 0 !important;       
         transform: none !important; 
-        display: flex !important;
-        justify-content: center;
-        align-items: center;
         
-        width: 250px !important;   /* Ép kích thước px cố định để không bị phình to trên mobile */            
-        height: 250px !important;              
-        margin: 0 auto !important; 
-        overflow: visible !important;           
+        /* Kích thước giữ nguyên để đảm bảo hiển thị đẹp trên mobile */
+        width: 65vw;               
+        height: 65vw;              
+        max-width: 280px;          
+        min-width: 200px;          
+        margin: 0 auto;            
     }
 
-    /* 4. FIX TRIỆT ĐỂ: Ép tất cả các layer con và hình SVG phải đứng im trong khung mẹ */
-    .visual-left-wrapper *,
-    .visual-center-wrapper *,
-    .visual-right-wrapper * {
-        position: absolute !important; /* Giữ absolute nội bộ */
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important; /* Căn toàn bộ ruột SVG vào tâm của khung 250px */
-        width: 100% !important;
-        height: 100% !important;
+    /* 4. Thứ tự xếp chồng */
+    .visual-left-wrapper {
+        order: 1; 
     }
 
-    /* 5. Thứ tự xuất hiện từ trên xuống dưới */
-    .visual-left-wrapper { order: 1; }
-    .visual-center-wrapper { order: 2; }
-    .visual-right-wrapper { order: 3; }
+    .visual-center-wrapper {
+        order: 2; 
+        width: 75vw;  
+        height: 75vw;
+        max-width: 320px;
+    }
 
-    /* Hiệu ứng thu phóng nhẹ nhàng khi chạm nhẹ trên điện thoại */
+    .visual-right-wrapper {
+        order: 3; 
+    }
+
+    /* Hoạt họa hover trên mobile */
+    .visual-left-wrapper:hover,
+    .visual-right-wrapper:hover {
+        transform: scale(1.05) !important; 
+    }
+
     .visual-left-wrapper:active, 
-    .visual-center-wrapper:active,
     .visual-right-wrapper:active {
-        transform: scale(0.96) !important;
-        transition: transform 0.1s ease;
+        transform: scale(0.98) !important;
     }
 }
 
@@ -1010,22 +1010,14 @@ html, body {
    7. HỆ THỐNG PHÂN CHIA RESPONSIVE CHO MÀN HÌNH NHỎ
    ================================================================= */
 @media (max-width: 1024px) {
-   /* Đảm bảo container bọc video không bị ghim chết một chỗ */
     .video-container {
         position: relative;
         top: 0;
         left: 0;
         transform: none;
-        margin: 45px auto 20px auto; /* Đã xích lên ở bước trước */
         width: 90%; 
-        
+        margin: 20px auto; /* Căn giữa bằng margin */
     }
-
-    /* --- ĐÃ THÊM: Đẩy video xích xuống so với SVG nền --- */
-    .tutorial-video {
-        top: 22px; /* Chỉnh con số này lớn hơn nếu bạn muốn video tụt xuống thấp hơn nữa */
-    }
-}
 
     .control-row-bottom {
         gap: 100px;
@@ -1036,7 +1028,7 @@ html, body {
         height: auto;
         display: block;
     }
-
+}
 
 @media (max-width: 768px) {
     .control-row-bottom {
@@ -1065,175 +1057,147 @@ html, body {
     }
 }
 
-
-/* =================================================================
-   7. HỆ THỐNG RESPONSIVE: KHÓA CHẾT CỤM VIDEO - CHỈ CUỘN TIẾN TRÌNH
-   ================================================================= */
-
-/* --- Cấu hình chung cho Máy tính bảng & Điện thoại (Dưới 1024px) --- */
-@media (max-width: 1024px) {
-    /* 1. KHÓA CHẾT TOÀN TRANG: Cấm tuyệt đối không cho cuộn cả trang body */
-    html, body {
-        overflow: hidden !important;
-        height: 100vh !important;
-        height: 100dvh !important; /* Tối ưu chiều cao thực tế trên Safari iOS */
-    }
-
-    body {
-        display: flex;
-        flex-direction: column; /* Chia màn hình làm 2 phần: Trên (Cố định) - Dưới (Cuộn) */
-    }
-
-    /* 2. GHIM CỐ ĐỊNH CỤM VIDEO: Bao gồm cả khung video và dock điều khiển */
-    .video-container {
-        position: relative; /* Giữ relative kết hợp flex-shrink để ghim chết ở nửa trên mà không bị lệch lề */
-        flex-shrink: 0;     /* Ép khối này đứng im, cấm co bóp chiều cao khi phần dưới cuộn */
-        top: 0;
-        left: 0;
-        transform: none;
-        width: 90%; 
-        margin: 35px auto 0 auto; /* Đẩy lề trên xích xuống một chút cho thoáng */
-        z-index: 99;
-    }
-
-    /* Đẩy video xích xuống chuẩn khít so với SVG nền */
-    .tutorial-video {
-        top: 22px; 
-    }
-
-    /* Thu nhỏ bớt padding controls trên màn hình trung bình */
-    .custom-controls {
-        padding: 25px 20px; 
-    }
-
-    .control-row-top {
-        width: 100%;
-    }
-
-    .control-row-bottom {
-        gap: 0; 
-        justify-content: space-between; 
-        padding: 0 5px;
-    }
-
-    /* 3. BẬT CUỘN ĐỘC LẬP CHO PROGRESS CONTAINER (NẰM Ở NỬA DƯỚI) */
-.progress-container {
-        position: relative;
-        top: 0;
-        right: 0;
-        transform: none;
-        
-        width: 80%;
-        max-width: 650px;
-        
-        /* --- ĐÃ SỬA: Tăng lề trên từ 25px lên 55px để đẩy cụm tiến trình xích xuống dưới sâu hơn --- */
-        margin: 55px auto 0 auto; 
-        
-        /* Các thuộc tính vùng cuộn giữ nguyên vẹn */
-        flex-grow: 1;             
-        overflow-y: auto !important; 
-        overflow-x: hidden !important;
-        max-height: none; 
-        scale: 1;
-        padding-bottom: 50px;     
-    }
-
-    /* Hiện thanh cuộn mini tinh tế màu tím để người dùng biết vùng này vuốt được */
-    .progress-container::-webkit-scrollbar {
-        display: block !important;
-        width: 3px;
-    }
-    .progress-container::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    .progress-container::-webkit-scrollbar-thumb {
-        background: #A85197;
-        border-radius: 10px;
-    }
-}
-
-/* --- Tối ưu chi tiết cho Điện thoại di động & iPhone 15 (Dưới 768px) --- */
+/* --- Điện thoại di động (Dưới 768px) --- */
 @media (max-width: 768px) {
-    .video-container {
-        width: 92%; /* Nới rộng cụm video một chút trên màn hình dọc điện thoại */
-    }
-
-    /* Tinh chỉnh dock điều khiển dẹt tròn, chia 2 hàng để cứu iPhone 15 không bị ép nút */
     .custom-controls {
-        width: 88%;            
-        margin: 32px auto 0 auto; /* Đẩy dock dịch xuống 32px khít cạnh khung dưới */
-        padding: 15px 12px; 
-        gap: 12px;             
+        padding: 15px 10px; /* Ép không gian cực kỳ nhỏ gọn */
+        gap: 8px;           /* Thu hẹp khoảng cách giữa thanh Timeline và hàng nút */
     }
 
+    /* Ép tất cả các cụm (Nút bấm, Volume, Speed) xếp chung trên một hàng gọn gàng */
     .control-row-bottom {
-        display: flex;
-        flex-direction: column; /* Bẻ đôi: Hàng trên nút Play, hàng dưới Volume/Speed */
-        align-items: center;
-        gap: 12px;              
-        width: 100%;
+        flex-direction: row; 
+        justify-content: space-between;
+        gap: 5px;
         margin-top: 0;
     }
 
+    /* Thu nhỏ cụm nút Play/Next/Prev nằm sát lại nhau */
     .left-btns {
-        width: 100%;
-        justify-content: center; 
-        gap: 10px;               
+        gap: 4px; 
     }
 
+    /* Giảm size chữ và thu hẹp vùng đệm của nút UI cho thật nhỏ gọn */
     .ui-btn {
-        height: 38px;            
-        padding: 0 16px;         
-        font-size: 13px;         
-        gap: 6px;
+        height: 32px;       /* Hạ chiều cao từ 40px xuống 32px */
+        padding: 0 10px;    /* Thu hẹp padding ngang */
+        font-size: 11px;    /* Hạ size chữ nhỏ xuống */
+        gap: 5px;
     }
-
+    
     .ui-btn svg {
-        width: 14px;             
-        height: 14px;
+        width: 12px;        /* Thu nhỏ icon SVG bên trong nút */
+        height: 12px;
     }
 
+    /* Giữ cụm Volume & Speed siêu nhỏ trên cùng một hàng hàng ngang */
     .volume-wrapper,
     .speed-wrapper {
-        height: 36px;            
+        height: 32px;       /* Đồng bộ chiều cao 32px bằng nút bấm */
         background: #000;
-        flex: 1;                 
-        max-width: 140px;        
-        justify-content: center;
     }
 
+    /* Trên điện thoại, cố định thanh trượt hiển thị ngắn và thanh thoát */
     .volume-control,
     .speed-control {
-        width: 60px !important;  
+        width: 45px !important; /* Thu ngắn độ dài thanh trượt để không bị tràn */
         opacity: 1 !important;
-        margin-left: 5px;
+        margin-left: 3px;
     }
 
-    .speed-wrapper:hover .speed-control { width: 60px; }
-    #volumeSlider, #speedSlider { width: 100%; height: 3px; }
-    #volumeBtn, #playspeedBtn { min-width: 35px !important; padding: 0 6px !important; }
+    .speed-wrapper:hover .speed-control {
+        width: 45px;
+    }
 
-    /* Bóp nhỏ thêm một chút chiều ngang Progress Container trên màn hình dọc */
-    .progress-container {
-        width: 82%;
-        max-width: 500px; /* Thu gọn chặn trên cho ôm sát chữ nghĩa */
-        margin: 60px auto 0 auto;
+    #volumeSlider,
+    #speedSlider {
+        width: 100%;
+        height: 2px;        /* Làm thanh trượt mảnh mai hơn */
+    }
+
+    /* Thu nhỏ riêng nút Volume và Speed trong wrapper */
+    #volumeBtn,
+    #playspeedBtn {
+        min-width: 30px !important;
+        padding: 0 5px !important;
     }
 }
 
-/* --- Tối ưu thêm cho các dòng điện thoại màn hình cực nhỏ (Dưới 360px) --- */
-@media (max-width: 360px) {
-    .ui-btn {
-        padding: 0 12px;
-        font-size: 12px;
-        height: 35px;
+/* --- Điện thoại siêu nhỏ (Dưới 400px) --- */
+@media (max-width: 400px) {
+    .custom-controls {
+        padding: 10px 5px;
+    }
+    
+    /* Ẩn bớt text chữ số của tốc độ để giải phóng không gian cho màn hình quá bé */
+    .speed-control span {
+        display: none; 
     }
     
     .volume-control,
     .speed-control {
-        width: 45px !important;  
+        width: 35px !important; /* Ép thanh trượt ngắn thêm nữa */
+    }
+
+    .ui-btn {
+        font-size: 10px;
+        padding: 0 6px;
     }
 }
+@media (max-width: 768px) {
+    .custom-controls {
+        padding: 15px 10px; 
+        gap: 8px;
+        width: 88%;            
+        
+        /* --- BỔ SUNG DÒNG NÀY --- */
+        margin-top: 32px; /* Đẩy thanh điều khiển dịch xuống 12px riêng trên thiết bị di động */
+    }
+    
+    /* Các dòng code flex-direction, left-btns... bên dưới giữ nguyên */
+}
+
+@media (max-width: 1024px) {
+    /* --- KÍCH HOẠT CUỘN DỌC TOÀN TRANG CHO MOBILE / TABLET --- */
+    html, body {
+        overflow-y: auto !important;  /* Cho phép vuốt cuộn lên xuống tự nhiên */
+        overflow-x: hidden !important; /* Khóa cứng cuộn ngang để giao diện không bị lệch vẹo */
+        height: auto !important;       /* Giải phóng chiều cao cố định 100vh */
+        min-height: 100vh;
+    }
+
+    /* Đảm bảo container bọc video không bị ghim chết một chỗ */
+    .video-container {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        margin: 40px auto 20px auto; /* Căn giữa, tạo khoảng cách thoáng với rìa trên */
+        width: 90%; 
+    }
+
+    /* Cụm tiến trình khi rơi xuống dưới cũng tự giãn theo trang */
+    .progress-container {
+        position: relative;
+        top: 0;
+        right: 0;
+        transform: none;
+        width: 80%;
+        max-width: 650px;
+        height: auto;
+        max-height: none;       /* Bỏ giới hạn chiều cao */
+        overflow-y: visible;    /* Đi theo luồng cuộn dọc của toàn trang body */
+        margin: 20px auto;
+        padding-right: 0;
+        scale: 1;
+    }
+
+    /* Ẩn thanh cuộn riêng lẻ của progress vì giờ đã cuộn chung cả trang */
+    .progress-container::-webkit-scrollbar {
+        display: none;
+    }
+}
+/* --- 1. Sửa tận gốc: Ép cả asset hình bên trong phải co theo khung mẹ --- */
 .top-right-decoration img,
 .top-right-decoration svg {
     width: 100% !important;
@@ -1254,4 +1218,3 @@ html, body {
         /* Làm mờ bớt để không tranh chấp với chữ nghĩa */
     }
 }
-
